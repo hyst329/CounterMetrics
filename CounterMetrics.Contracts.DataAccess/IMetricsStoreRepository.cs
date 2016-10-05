@@ -3,10 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.ServiceModel;
 
 namespace CounterMetrics.Contracts.DataAccess
 {
-    public class Class1
+    [ServiceContract]
+    interface IMetricsStoreRepository
     {
+        [OperationContract(IsOneWay = true)]
+        void Persist(MetricEntity metricEntity);
     }
 }
