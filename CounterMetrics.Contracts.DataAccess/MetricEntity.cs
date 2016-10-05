@@ -11,7 +11,7 @@ namespace CounterMetrics.Contracts.DataAccess
 {
     [Table("Metrics")]
     [DataContract]
-    class MetricEntity
+    public class MetricEntity
     {
         [DataMember]
         public int CounterID { get; set; }

@@ -8,7 +8,7 @@ using System.ServiceModel;
 namespace CounterMetrics.Contracts.DataAccess
 {
     [ServiceContract]
-    interface IUserRepository
+    public interface IUserRepository
     {
         [OperationContract]
         void Create(UserEntity userEntity);

@@ -11,7 +11,7 @@ namespace CounterMetrics.Contracts.DataAccess
 {
     [Table("Counters")]
     [DataContract]
-    class CounterEntity
+    public class CounterEntity
     {
         [Key]
         [DataMember]
