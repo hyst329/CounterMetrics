@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 
 namespace CounterMetrics.Infrastructure
 {
-    public class Class1
+    public interface ILogger
     {
+        void Log(LogSeverity severity, string message);
     }
+    public enum LogSeverity { Info, Warning, Error}
 }
