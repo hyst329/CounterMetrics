@@ -58,13 +58,23 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Counter.cs" />
     <Compile Include="IAccountManager.cs" />
     <Compile Include="IAuthManager.cs" />
+    <Compile Include="ICounterManager.cs" />
+    <Compile Include="IMetricsManager.cs" />
+    <Compile Include="Metric.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="User.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CounterMetrics.Contracts.DataAccess\CounterMetrics.Contracts.DataAccess.csproj">
+      <Project>{AD930FD0-6A34-4944-8B1D-D70F77D32A4C}</Project>
+      <Name>CounterMetrics.Contracts.DataAccess</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

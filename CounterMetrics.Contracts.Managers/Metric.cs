@@ -8,11 +8,11 @@ using System.Threading.Tasks;
 namespace CounterMetrics.Contracts.Managers
 {
     [DataContract]
-    public class User
+    public class Metric
     {
         [DataMember]
-        public string Name { get; set; }
+        public int CounterID { get; set; }
         [DataMember]
-        public string Password { get; set; }
+        public decimal MetricValue { get; set; }
     }
 }

@@ -8,11 +8,13 @@ using System.ServiceModel;
 namespace CounterMetrics.Contracts.Managers
 {
     [ServiceContract]
-    interface IAuthManager
+    interface IMetricsManager
     {
         [OperationContract]
-        void Login(User user);
+        void Add(Metric metric);
         [OperationContract]
-        void Logout();
+        void FindByType(int userID, DataAccess.CounterType? counterType);
+        [OperationContract]
+        void FindByDate(DateTime? startDate, DateTime? endDate);
     }
 }
