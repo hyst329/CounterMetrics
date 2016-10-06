@@ -8,22 +8,22 @@ using System.Threading.Tasks;
 
 namespace CounterMetrics.DataAccess
 {
-    public class UserRepository : IUserRepository
+    public class CounterRepository : ICounterRepository
     {
         private DatabaseContext databaseContext;
 
-        public UserRepository(DatabaseContext databaseContext)
+        public CounterRepository(DatabaseContext databaseContext)
         {
             this.databaseContext = databaseContext;
         }
 
-        public void Create(UserEntity userEntity)
+        public void Create(CounterEntity counterEntity)
         {
             //throw new NotImplementedException();
             try
             {
                 ServiceLocator.Logger.Log(LogSeverity.Info, String.Format("DataAccess {0}: Create", this.GetType().FullName));
-                this.databaseContext.UserEntity.Add(userEntity);
+                this.databaseContext.CounterEntity.Add(counterEntity);
                 this.databaseContext.SaveChanges();
             }
             catch (Exception e)
@@ -31,15 +31,15 @@ namespace CounterMetrics.DataAccess
                 ServiceLocator.Logger.Log(LogSeverity.Error, e.Message);
                 throw;
             }
-            ServiceLocator.Logger.Log(LogSeverity.Info, String.Format("Created user {0} with ID {1} and password hash {2}", userEntity.Name,
-                userEntity.ID, userEntity.PasswordHash));
+            ServiceLocator.Logger.Log(LogSeverity.Info, String.Format("Created counter of type {0} with ID {1}", counterEntity.Type,
+                counterEntity.ID));
         }
-        public void Delete(UserEntity userEntity)
+        public void Delete(CounterEntity counterEntity)
         {
             try
             {
                 ServiceLocator.Logger.Log(LogSeverity.Info, String.Format("DataAccess {0}: Delete", this.GetType().FullName));
-                this.databaseContext.UserEntity.Remove(userEntity);
+                this.databaseContext.CounterEntity.Remove(counterEntity);
                 this.databaseContext.SaveChanges();
             }
             catch (Exception e)
@@ -47,8 +47,8 @@ namespace CounterMetrics.DataAccess
                 ServiceLocator.Logger.Log(LogSeverity.Error, e.Message);
                 throw;
             }
-            ServiceLocator.Logger.Log(LogSeverity.Info, String.Format("Deleted user {0} with ID {1}", userEntity.Name,
-                userEntity.ID));
+            ServiceLocator.Logger.Log(LogSeverity.Info, String.Format("Deleted counter {0} of type with ID {1}", counterEntity.Type,
+                counterEntity.ID));
         }
     }
 }

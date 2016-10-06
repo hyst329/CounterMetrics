@@ -8,7 +8,7 @@ using CounterMetrics.Contracts.DataAccess;
 
 namespace CounterMetrics.DataAccess
 {
-    class DatabaseContext : DbContext
+    public class DatabaseContext : DbContext
     {
         public DatabaseContext(string connectionString)//
            : base(connectionString)

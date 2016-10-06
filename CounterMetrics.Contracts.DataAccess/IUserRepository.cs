@@ -13,8 +13,6 @@ namespace CounterMetrics.Contracts.DataAccess
         [OperationContract]
         void Create(UserEntity userEntity);
         [OperationContract]
-        void Update(UserEntity userEntity);
-        [OperationContract]
         void Delete(UserEntity userEntity);
     }
 }

@@ -8,12 +8,10 @@ using System.ServiceModel;
 namespace CounterMetrics.Contracts.DataAccess
 {
     [ServiceContract]
-    interface ICounterRepository
+    public interface ICounterRepository
     {
         [OperationContract]
         void Create(CounterEntity counterEntity);
-        [OperationContract]
-        void Update(CounterEntity counterEntity);
         [OperationContract]
         void Delete(CounterEntity counterEntity);
     }
