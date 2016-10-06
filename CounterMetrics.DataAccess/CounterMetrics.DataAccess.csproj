@@ -67,6 +67,8 @@
   <ItemGroup>
     <Compile Include="DatabaseContext.cs" />
     <Compile Include="CounterRepository.cs" />
+    <Compile Include="MetricsRetrieveRepository.cs" />
+    <Compile Include="MetricsStoreRepository.cs" />
     <Compile Include="UserRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -8,7 +8,7 @@ using System.ServiceModel;
 namespace CounterMetrics.Contracts.DataAccess
 {
     [ServiceContract]
-    interface IMetricsStoreRepository
+    public interface IMetricsStoreRepository
     {
         [OperationContract(IsOneWay = true)]
         void Persist(MetricEntity metricEntity);

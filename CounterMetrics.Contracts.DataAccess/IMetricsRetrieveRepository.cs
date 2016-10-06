@@ -8,11 +8,11 @@ using System.ServiceModel;
 namespace CounterMetrics.Contracts.DataAccess
 {
     [ServiceContract]
-    interface IMetricsRetrieveRepository
+    public interface IMetricsRetrieveRepository
     {
         [OperationContract]
-        CounterEntity[] Find(CounterType? counterType, UserEntity userEntity);
+        MetricEntity[] Find(CounterType? counterType, UserEntity userEntity);
         [OperationContract]
-        CounterEntity[] FindByDate(DateTime? dateTimeStart, DateTime? dateTimeEnd);
+        MetricEntity[] FindByDate(DateTime? dateTimeStart, DateTime? dateTimeEnd);
     }
 }
