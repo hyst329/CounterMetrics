@@ -14,5 +14,7 @@ namespace CounterMetrics.Contracts.DataAccess
         void Create(UserEntity userEntity);
         [OperationContract]
         void Delete(UserEntity userEntity);
+        [OperationContract]
+        int GetFreeID();
     }
 }

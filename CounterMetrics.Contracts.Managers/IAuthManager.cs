@@ -8,7 +8,7 @@ using System.ServiceModel;
 namespace CounterMetrics.Contracts.Managers
 {
     [ServiceContract]
-    interface IAuthManager
+    public interface IAuthManager
     {
         [OperationContract]
         void Login(User user);

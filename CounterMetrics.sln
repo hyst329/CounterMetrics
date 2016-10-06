@@ -37,6 +37,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Hosts", "Hosts", "{8082DADA
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{9EA9E781-44CB-48E1-8848-E7D50D5125AA}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{4CAF0F52-557B-476D-88BF-FBA0DB8EA919}"
+	ProjectSection(SolutionItems) = preProject
+		REQUIREMENTS.md = REQUIREMENTS.md
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

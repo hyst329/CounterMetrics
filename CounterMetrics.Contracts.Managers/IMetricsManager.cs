@@ -8,7 +8,7 @@ using System.ServiceModel;
 namespace CounterMetrics.Contracts.Managers
 {
     [ServiceContract]
-    interface IMetricsManager
+    public interface IMetricsManager
     {
         [OperationContract]
         void Add(Metric metric);

@@ -50,5 +50,23 @@ namespace CounterMetrics.DataAccess
             ServiceLocator.Logger.Log(LogSeverity.Info, String.Format("Deleted user {0} with ID {1}", userEntity.Name,
                 userEntity.ID));
         }
+
+        public int GetFreeID()
+        {
+            //throw new NotImplementedException();
+            int id;
+            try
+            {
+                ServiceLocator.Logger.Log(LogSeverity.Info, String.Format("DataAccess {0}: Get Free ID", this.GetType().FullName));
+                id =  this.databaseContext.UserEntity.Select(user => user.ID).Max() + 1;
+            }
+            catch (Exception e)
+            {
+                ServiceLocator.Logger.Log(LogSeverity.Error, e.Message);
+                throw;
+            }
+            ServiceLocator.Logger.Log(LogSeverity.Info, String.Format("Free ID is {0}", id));
+            return id;
+        }
     }
 }

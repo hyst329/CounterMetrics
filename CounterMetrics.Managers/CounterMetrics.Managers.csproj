@@ -65,12 +65,22 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
+    <Compile Include="AccountManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CounterMetrics.Contracts.Managers\CounterMetrics.Contracts.Managers.csproj">
+      <Project>{ee3b040e-e8fd-423a-89e4-5b3b43f41b24}</Project>
+      <Name>CounterMetrics.Contracts.Managers</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CounterMetrics.DataAccess\CounterMetrics.DataAccess.csproj">
+      <Project>{4e341f71-ab5a-439f-bd8d-6ac85e6ea8ee}</Project>
+      <Name>CounterMetrics.DataAccess</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
