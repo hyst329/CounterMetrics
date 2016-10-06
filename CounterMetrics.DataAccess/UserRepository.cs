@@ -34,11 +34,13 @@ namespace CounterMetrics.DataAccess
             ServiceLocator.Logger.Log(LogSeverity.Info, String.Format("Created user {0} with ID {1} and password hash {2}", userEntity.Name,
                 userEntity.ID, userEntity.PasswordHash));
         }
-        public void Delete(UserEntity userEntity)
+        public void DeleteByID(int userID)
         {
+            UserEntity userEntity;
             try
             {
                 ServiceLocator.Logger.Log(LogSeverity.Info, String.Format("DataAccess {0}: Delete", this.GetType().FullName));
+                userEntity = this.databaseContext.UserEntity.First(uE => uE.ID == userID);
                 this.databaseContext.UserEntity.Remove(userEntity);
                 this.databaseContext.SaveChanges();
             }
@@ -58,8 +60,9 @@ namespace CounterMetrics.DataAccess
             try
             {
                 ServiceLocator.Logger.Log(LogSeverity.Info, String.Format("DataAccess {0}: Get Free ID", this.GetType().FullName));
-                id =  this.databaseContext.UserEntity.Select(user => user.ID).Max() + 1;
+                id =  this.databaseContext.UserEntity.Select(user => user.ID).DefaultIfEmpty(0).Max() + 1;
             }
+
             catch (Exception e)
             {
                 ServiceLocator.Logger.Log(LogSeverity.Error, e.Message);

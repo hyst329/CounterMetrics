@@ -20,6 +20,7 @@ namespace CounterMetrics.Infrastructure
 
         public static ILogger Logger { get { return _containerIoc.Resolve<ILogger>(); } }
 
+        public static IHasher Hasher { get { return _containerIoc.Resolve<IHasher>(); } }
         public static ServiceLocator Build(UnityContainer containerIoc)
         {
             if (_serviceLocatorInstance == null)

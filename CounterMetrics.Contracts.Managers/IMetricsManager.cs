@@ -13,8 +13,12 @@ namespace CounterMetrics.Contracts.Managers
         [OperationContract]
         void Add(Metric metric);
         [OperationContract]
-        void FindByType(int userID, DataAccess.CounterType? counterType);
+        Metric[] FindByType(int? userID, DataAccess.CounterType? counterType);
         [OperationContract]
-        void FindByDate(DateTime? startDate, DateTime? endDate);
+        Metric[] Find();
+        [OperationContract]
+        Metric[] FindByDate(DateTime? startDate, DateTime? endDate);
+        [OperationContract]
+        Metric[] GetStaticticsForMonth(int monthNumber, int? yearNumber = null);
     }
 }

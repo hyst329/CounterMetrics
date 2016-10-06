@@ -1,5 +1,7 @@
-﻿using CounterMetrics.Contracts.Managers;
+﻿using CounterMetrics.Contracts.DataAccess;
+using CounterMetrics.Contracts.Managers;
 using CounterMetrics.DataAccess;
+using CounterMetrics.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,7 +22,8 @@ namespace CounterMetrics.Managers
         {
             //throw new NotImplementedException();
             int newUserID = this.userRepository.GetFreeID();
-            
+            string passwordHash = ServiceLocator.Hasher.Hash(user.Password);
+            this.userRepository.Create(new UserEntity { ID = newUserID, Name = user.Name, PasswordHash = passwordHash });
         }
     }
 }
