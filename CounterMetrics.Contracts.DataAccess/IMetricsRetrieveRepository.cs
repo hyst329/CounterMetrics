@@ -14,5 +14,7 @@ namespace CounterMetrics.Contracts.DataAccess
         MetricEntity[] Find(CounterType? counterType, UserEntity userEntity);
         [OperationContract]
         MetricEntity[] FindByDate(DateTime? dateTimeStart, DateTime? dateTimeEnd);
+        [OperationContract]
+        MetricEntity[] FindUserMetricsForMonth(int userID, int monthNumber, int? yearNumber);
     }
 }

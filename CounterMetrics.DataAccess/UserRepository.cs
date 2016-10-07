@@ -53,6 +53,36 @@ namespace CounterMetrics.DataAccess
                 userEntity.ID));
         }
 
+        public UserEntity[] Find()
+        {
+            //throw new NotImplementedException();
+            try
+            {
+                ServiceLocator.Logger.Log(LogSeverity.Info, String.Format("DataAccess {0}: Find all", this.GetType().FullName));
+                return this.databaseContext.UserEntity.ToArray();
+            }
+            catch (Exception e)
+            {
+                ServiceLocator.Logger.Log(LogSeverity.Error, e.Message);
+                throw;
+            }
+        }
+
+        public UserEntity FindByID(int userID)
+        {
+            //throw new NotImplementedException();
+            try
+            {
+                ServiceLocator.Logger.Log(LogSeverity.Info, String.Format("DataAccess {0}: Find by ID", this.GetType().FullName));
+                return this.databaseContext.UserEntity.First(uE => uE.ID == userID);
+            }
+            catch (Exception e)
+            {
+                ServiceLocator.Logger.Log(LogSeverity.Error, e.Message);
+                throw;
+            }
+        }
+
         public int GetFreeID()
         {
             //throw new NotImplementedException();
@@ -60,7 +90,7 @@ namespace CounterMetrics.DataAccess
             try
             {
                 ServiceLocator.Logger.Log(LogSeverity.Info, String.Format("DataAccess {0}: Get Free ID", this.GetType().FullName));
-                id =  this.databaseContext.UserEntity.Select(user => user.ID).DefaultIfEmpty(0).Max() + 1;
+                id = this.databaseContext.UserEntity.Select(user => user.ID).DefaultIfEmpty(0).Max() + 1;
             }
 
             catch (Exception e)

@@ -51,5 +51,21 @@ namespace CounterMetrics.DataAccess
                 throw;
             }
         }
+
+        public MetricEntity[] FindUserMetricsForMonth(int userID, int monthNumber, int? yearNumber)
+        {
+            //throw new NotImplementedException();
+            try
+            {
+                DateTime now = DateTime.Now;
+                if (yearNumber == null) yearNumber = (now.Month >= monthNumber) ? now.Year : now.Year - 1;
+                return this.databaseContext.MetricEntity.Where(metric => metric.MetricDate.Year == yearNumber && metric.MetricDate.Month == monthNumber).ToArray();
+            }
+            catch (Exception e)
+            {
+                ServiceLocator.Logger.Log(LogSeverity.Error, e.Message);
+                throw;
+            }
+        }
     }
 }
