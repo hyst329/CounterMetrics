@@ -2,18 +2,17 @@
 using System.Linq;
 using CounterMetrics.Contracts.DataAccess;
 using CounterMetrics.Contracts.Managers;
-using CounterMetrics.DataAccess;
 
 namespace CounterMetrics.Managers
 {
     public class MetricsManager : IMetricsManager
     {
-        private readonly MetricsRetrieveRepository _metricsRetrieveRepository;
-        private readonly MetricsStoreRepository _metricsStoreRepository;
-        private readonly UserRepository _userRepository;
+        private readonly IMetricsRetrieveRepository _metricsRetrieveRepository;
+        private readonly IMetricsStoreRepository _metricsStoreRepository;
+        private readonly IUserRepository _userRepository;
 
-        public MetricsManager(MetricsStoreRepository metricsStoreRepository,
-            MetricsRetrieveRepository metricsRetrieveRepository, UserRepository userRepository)
+        public MetricsManager(IMetricsStoreRepository metricsStoreRepository,
+            IMetricsRetrieveRepository metricsRetrieveRepository, IUserRepository userRepository)
         {
             _metricsStoreRepository = metricsStoreRepository;
             _metricsRetrieveRepository = metricsRetrieveRepository;

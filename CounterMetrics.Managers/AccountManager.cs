@@ -1,15 +1,14 @@
 ﻿using CounterMetrics.Contracts.DataAccess;
 using CounterMetrics.Contracts.Managers;
-using CounterMetrics.DataAccess;
 using CounterMetrics.Infrastructure;
 
 namespace CounterMetrics.Managers
 {
     public class AccountManager : IAccountManager
     {
-        private readonly UserRepository _userRepository;
+        private readonly IUserRepository _userRepository;
 
-        public AccountManager(UserRepository userRepository)
+        public AccountManager(IUserRepository userRepository)
         {
             _userRepository = userRepository;
         }

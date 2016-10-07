@@ -1,15 +1,14 @@
 ﻿using System.Linq;
 using CounterMetrics.Contracts.DataAccess;
 using CounterMetrics.Contracts.Managers;
-using CounterMetrics.DataAccess;
 
 namespace CounterMetrics.Managers
 {
     public class CounterManager : ICounterManager
     {
-        private readonly CounterRepository _counterRepository;
+        private readonly ICounterRepository _counterRepository;
 
-        public CounterManager(CounterRepository counterRepository)
+        public CounterManager(ICounterRepository counterRepository)
         {
             _counterRepository = counterRepository;
         }
