@@ -7,11 +7,11 @@ namespace CounterMetrics.DataAccess
 {
     public class UserRepository : IUserRepository
     {
-        private readonly DatabaseContext databaseContext;
+        private readonly DatabaseContext _databaseContext;
 
         public UserRepository(DatabaseContext databaseContext)
         {
-            this.databaseContext = databaseContext;
+            _databaseContext = databaseContext;
         }
 
         public void Create(UserEntity userEntity)
@@ -19,9 +19,9 @@ namespace CounterMetrics.DataAccess
             //throw new NotImplementedException();
             try
             {
-                ServiceLocator.Logger.Log(LogSeverity.Info, string.Format("DataAccess {0}: Create", GetType().FullName));
-                databaseContext.UserEntity.Add(userEntity);
-                databaseContext.SaveChanges();
+                ServiceLocator.Logger.Log(LogSeverity.Info, $"DataAccess {GetType().FullName}: Create");
+                _databaseContext.UserEntity.Add(userEntity);
+                _databaseContext.SaveChanges();
             }
             catch (Exception e)
             {
@@ -29,27 +29,25 @@ namespace CounterMetrics.DataAccess
                 throw;
             }
             ServiceLocator.Logger.Log(LogSeverity.Info,
-                string.Format("Created user {0} with ID {1} and password hash {2}", userEntity.Name,
-                    userEntity.ID, userEntity.PasswordHash));
+                $"Created user {userEntity.Name} with ID {userEntity.Id} and password hash {userEntity.PasswordHash}");
         }
 
-        public void DeleteByID(int userID)
+        public void DeleteById(int userId)
         {
             UserEntity userEntity;
             try
             {
-                ServiceLocator.Logger.Log(LogSeverity.Info, string.Format("DataAccess {0}: Delete", GetType().FullName));
-                userEntity = databaseContext.UserEntity.First(uE => uE.ID == userID);
-                databaseContext.UserEntity.Remove(userEntity);
-                databaseContext.SaveChanges();
+                ServiceLocator.Logger.Log(LogSeverity.Info, $"DataAccess {GetType().FullName}: Delete");
+                userEntity = _databaseContext.UserEntity.First(uE => uE.Id == userId);
+                _databaseContext.UserEntity.Remove(userEntity);
+                _databaseContext.SaveChanges();
             }
             catch (Exception e)
             {
                 ServiceLocator.Logger.Log(LogSeverity.Error, e.Message);
                 throw;
             }
-            ServiceLocator.Logger.Log(LogSeverity.Info, string.Format("Deleted user {0} with ID {1}", userEntity.Name,
-                userEntity.ID));
+            ServiceLocator.Logger.Log(LogSeverity.Info, $"Deleted user {userEntity.Name} with ID {userEntity.Id}");
         }
 
         public UserEntity[] Find()
@@ -58,8 +56,8 @@ namespace CounterMetrics.DataAccess
             try
             {
                 ServiceLocator.Logger.Log(LogSeverity.Info,
-                    string.Format("DataAccess {0}: Find all", GetType().FullName));
-                return databaseContext.UserEntity.ToArray();
+                    $"DataAccess {GetType().FullName}: Find all");
+                return _databaseContext.UserEntity.ToArray();
             }
             catch (Exception e)
             {
@@ -68,14 +66,14 @@ namespace CounterMetrics.DataAccess
             }
         }
 
-        public UserEntity FindByID(int userID)
+        public UserEntity FindById(int userId)
         {
             //throw new NotImplementedException();
             try
             {
                 ServiceLocator.Logger.Log(LogSeverity.Info,
-                    string.Format("DataAccess {0}: Find by ID", GetType().FullName));
-                return databaseContext.UserEntity.First(uE => uE.ID == userID);
+                    $"DataAccess {GetType().FullName}: Find by ID");
+                return _databaseContext.UserEntity.First(uE => uE.Id == userId);
             }
             catch (Exception e)
             {
@@ -84,15 +82,15 @@ namespace CounterMetrics.DataAccess
             }
         }
 
-        public int GetFreeID()
+        public int GetFreeId()
         {
             //throw new NotImplementedException();
             int id;
             try
             {
                 ServiceLocator.Logger.Log(LogSeverity.Info,
-                    string.Format("DataAccess {0}: Get Free ID", GetType().FullName));
-                id = databaseContext.UserEntity.Select(user => user.ID).DefaultIfEmpty(0).Max() + 1;
+                    $"DataAccess {GetType().FullName}: Get Free ID");
+                id = _databaseContext.UserEntity.Select(user => user.Id).DefaultIfEmpty(0).Max() + 1;
             }
 
             catch (Exception e)
@@ -100,7 +98,7 @@ namespace CounterMetrics.DataAccess
                 ServiceLocator.Logger.Log(LogSeverity.Error, e.Message);
                 throw;
             }
-            ServiceLocator.Logger.Log(LogSeverity.Info, string.Format("Free ID is {0}", id));
+            ServiceLocator.Logger.Log(LogSeverity.Info, $"Free ID is {id}");
             return id;
         }
     }

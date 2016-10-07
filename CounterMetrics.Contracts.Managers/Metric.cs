@@ -6,7 +6,7 @@ namespace CounterMetrics.Contracts.Managers
     public class Metric
     {
         [DataMember]
-        public int CounterID { get; set; }
+        public int CounterId { get; set; }
 
         [DataMember]
         public decimal MetricValue { get; set; }

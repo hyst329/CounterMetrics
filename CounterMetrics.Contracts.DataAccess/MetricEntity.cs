@@ -9,7 +9,7 @@ namespace CounterMetrics.Contracts.DataAccess
     public class MetricEntity
     {
         [DataMember]
-        public int CounterID { get; set; }
+        public int CounterId { get; set; }
 
         [DataMember]
         public decimal MetricValue { get; set; }

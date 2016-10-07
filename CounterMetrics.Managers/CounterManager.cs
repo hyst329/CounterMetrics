@@ -16,7 +16,7 @@ namespace CounterMetrics.Managers
             throw new NotImplementedException();
         }
 
-        public Counter[] FindByUserID(int userID, CounterType? counterType)
+        public Counter[] FindByUserId(int userId, CounterType? counterType)
         {
             throw new NotImplementedException();
         }

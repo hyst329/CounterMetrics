@@ -6,11 +6,11 @@ namespace CounterMetrics.DataAccess
 {
     internal class MetricsStoreRepository : IMetricsStoreRepository
     {
-        private readonly DatabaseContext databaseContext;
+        private readonly DatabaseContext _databaseContext;
 
         public MetricsStoreRepository(DatabaseContext databaseContext)
         {
-            this.databaseContext = databaseContext;
+            _databaseContext = databaseContext;
         }
 
         public void Persist(MetricEntity metricEntity)
@@ -18,9 +18,9 @@ namespace CounterMetrics.DataAccess
             //throw new NotImplementedException();
             try
             {
-                ServiceLocator.Logger.Log(LogSeverity.Info, string.Format("DataAccess {0}: Persist", GetType().FullName));
-                databaseContext.MetricEntity.Add(metricEntity);
-                databaseContext.SaveChanges();
+                ServiceLocator.Logger.Log(LogSeverity.Info, $"DataAccess {GetType().FullName}: Persist");
+                _databaseContext.MetricEntity.Add(metricEntity);
+                _databaseContext.SaveChanges();
             }
             catch (Exception e)
             {
@@ -28,8 +28,7 @@ namespace CounterMetrics.DataAccess
                 throw;
             }
             ServiceLocator.Logger.Log(LogSeverity.Info,
-                string.Format("Created metric of type {0} with value {1} and date {2}",
-                    metricEntity.CounterID, metricEntity.MetricValue, metricEntity.MetricDate));
+                $"Created metric of type {metricEntity.CounterId} with value {metricEntity.MetricValue} and date {metricEntity.MetricDate}");
         }
     }
 }

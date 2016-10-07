@@ -10,7 +10,7 @@ namespace CounterMetrics.Contracts.DataAccess
     {
         [Key]
         [DataMember]
-        public int ID { get; set; }
+        public int Id { get; set; }
 
         [DataMember]
         public string Name { get; set; }

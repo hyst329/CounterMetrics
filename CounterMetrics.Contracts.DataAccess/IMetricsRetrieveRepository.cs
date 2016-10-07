@@ -13,6 +13,6 @@ namespace CounterMetrics.Contracts.DataAccess
         MetricEntity[] FindByDate(DateTime? dateTimeStart, DateTime? dateTimeEnd);
 
         [OperationContract]
-        MetricEntity[] FindUserMetricsForMonth(int userID, int monthNumber, int? yearNumber);
+        MetricEntity[] FindUserMetricsForMonth(int userId, int monthNumber, int? yearNumber);
     }
 }

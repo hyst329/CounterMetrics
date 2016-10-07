@@ -17,9 +17,9 @@ namespace CounterMetrics.ClientProxies.DataAccess
             return Channel.FindByDate(dateTimeStart, dateTimeEnd);
         }
 
-        public MetricEntity[] FindUserMetricsForMonth(int userID, int monthNumber, int? yearNumber)
+        public MetricEntity[] FindUserMetricsForMonth(int userId, int monthNumber, int? yearNumber)
         {
-            return Channel.FindUserMetricsForMonth(userID, monthNumber, yearNumber);
+            return Channel.FindUserMetricsForMonth(userId, monthNumber, yearNumber);
         }
     }
 }

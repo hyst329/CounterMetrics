@@ -7,19 +7,19 @@ namespace CounterMetrics.Managers
 {
     public class AccountManager : IAccountManager
     {
-        private readonly UserRepository userRepository;
+        private readonly UserRepository _userRepository;
 
         public AccountManager(UserRepository userRepository)
         {
-            this.userRepository = userRepository;
+            _userRepository = userRepository;
         }
 
         public void Register(User user)
         {
             //throw new NotImplementedException();
-            var newUserID = userRepository.GetFreeID();
+            var newUserId = _userRepository.GetFreeId();
             var passwordHash = ServiceLocator.Hasher.Hash(user.Password);
-            userRepository.Create(new UserEntity {ID = newUserID, Name = user.Name, PasswordHash = passwordHash});
+            _userRepository.Create(new UserEntity {Id = newUserId, Name = user.Name, PasswordHash = passwordHash});
         }
     }
 }

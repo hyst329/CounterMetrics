@@ -11,7 +11,7 @@ namespace CounterMetrics.Contracts.Managers
         void Add(Metric metric);
 
         [OperationContract]
-        Metric[] FindByType(int? userID, CounterType? counterType);
+        Metric[] FindByType(int? userId, CounterType? counterType);
 
         [OperationContract]
         Metric[] Find();

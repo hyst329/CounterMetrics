@@ -13,7 +13,7 @@ namespace CounterMetrics.Contracts.Managers
         void Remove(Counter counter);
 
         [OperationContract]
-        Counter[] FindByUserID(int userID, CounterType? counterType);
+        Counter[] FindByUserId(int userId, CounterType? counterType);
 
         [OperationContract]
         Counter[] FindAll();

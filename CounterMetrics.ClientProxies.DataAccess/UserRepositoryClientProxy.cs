@@ -10,9 +10,9 @@ namespace CounterMetrics.ClientProxies.DataAccess
             Channel.Create(userEntity);
         }
 
-        public void DeleteByID(int userID)
+        public void DeleteById(int userId)
         {
-            Channel.DeleteByID(userID);
+            Channel.DeleteById(userId);
         }
 
         public UserEntity[] Find()
@@ -20,14 +20,14 @@ namespace CounterMetrics.ClientProxies.DataAccess
             return Channel.Find();
         }
 
-        public UserEntity FindByID(int userID)
+        public UserEntity FindById(int userId)
         {
-            return Channel.FindByID(userID);
+            return Channel.FindById(userId);
         }
 
-        public int GetFreeID()
+        public int GetFreeId()
         {
-            return Channel.GetFreeID();
+            return Channel.GetFreeId();
         }
     }
 }

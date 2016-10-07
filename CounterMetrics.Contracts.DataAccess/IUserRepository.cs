@@ -9,15 +9,15 @@ namespace CounterMetrics.Contracts.DataAccess
         void Create(UserEntity userEntity);
 
         [OperationContract]
-        UserEntity FindByID(int userID);
+        UserEntity FindById(int userId);
 
         [OperationContract]
-        void DeleteByID(int userID);
+        void DeleteById(int userId);
 
         [OperationContract]
         UserEntity[] Find();
 
         [OperationContract]
-        int GetFreeID();
+        int GetFreeId();
     }
 }

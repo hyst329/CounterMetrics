@@ -7,11 +7,11 @@ namespace CounterMetrics.DataAccess
 {
     public class CounterRepository : ICounterRepository
     {
-        private readonly DatabaseContext databaseContext;
+        private readonly DatabaseContext _databaseContext;
 
         public CounterRepository(DatabaseContext databaseContext)
         {
-            this.databaseContext = databaseContext;
+            _databaseContext = databaseContext;
         }
 
         public void Create(CounterEntity counterEntity)
@@ -19,9 +19,9 @@ namespace CounterMetrics.DataAccess
             //throw new NotImplementedException();
             try
             {
-                ServiceLocator.Logger.Log(LogSeverity.Info, string.Format("DataAccess {0}: Create", GetType().FullName));
-                databaseContext.CounterEntity.Add(counterEntity);
-                databaseContext.SaveChanges();
+                ServiceLocator.Logger.Log(LogSeverity.Info, $"DataAccess {GetType().FullName}: Create");
+                _databaseContext.CounterEntity.Add(counterEntity);
+                _databaseContext.SaveChanges();
             }
             catch (Exception e)
             {
@@ -29,20 +29,19 @@ namespace CounterMetrics.DataAccess
                 throw;
             }
             ServiceLocator.Logger.Log(LogSeverity.Info,
-                string.Format("Created counter of type {0} with ID {1}", counterEntity.Type,
-                    counterEntity.ID));
+                $"Created counter of type {counterEntity.Type} with ID {counterEntity.Id}");
         }
 
-        public void DeleteByID(int counterID)
+        public void DeleteById(int counterId)
         {
             //throw new NotImplementedException();
             CounterEntity counterEntity;
             try
             {
-                counterEntity = databaseContext.CounterEntity.First(counter => counter.ID == counterID);
-                ServiceLocator.Logger.Log(LogSeverity.Info, string.Format("DataAccess {0}: Delete", GetType().FullName));
-                databaseContext.CounterEntity.Remove(counterEntity);
-                databaseContext.SaveChanges();
+                counterEntity = _databaseContext.CounterEntity.First(counter => counter.Id == counterId);
+                ServiceLocator.Logger.Log(LogSeverity.Info, $"DataAccess {GetType().FullName}: Delete");
+                _databaseContext.CounterEntity.Remove(counterEntity);
+                _databaseContext.SaveChanges();
             }
             catch (Exception e)
             {
@@ -50,19 +49,18 @@ namespace CounterMetrics.DataAccess
                 throw;
             }
             ServiceLocator.Logger.Log(LogSeverity.Info,
-                string.Format("Deleted counter {0} of type with ID {1}", counterEntity.Type,
-                    counterEntity.ID));
+                $"Deleted counter {counterEntity.Type} of type with ID {counterEntity.Id}");
         }
 
-        public CounterEntity FindByID(int counterID)
+        public CounterEntity FindById(int counterId)
         {
             //throw new NotImplementedException();
             CounterEntity counterEntity;
             try
             {
-                counterEntity = databaseContext.CounterEntity.First(counter => counter.ID == counterID);
+                counterEntity = _databaseContext.CounterEntity.First(counter => counter.Id == counterId);
                 ServiceLocator.Logger.Log(LogSeverity.Info,
-                    string.Format("DataAccess {0}: Find by ID", GetType().FullName));
+                    $"DataAccess {GetType().FullName}: Find by ID");
             }
             catch (Exception e)
             {
@@ -72,14 +70,14 @@ namespace CounterMetrics.DataAccess
             return counterEntity;
         }
 
-        public CounterEntity[] FindByUserID(int userID)
+        public CounterEntity[] FindByUserId(int userId)
         {
             //throw new NotImplementedException();
             try
             {
-                var counterEntities = databaseContext.CounterEntity.Where(counter => counter.UserID == userID).ToArray();
+                var counterEntities = _databaseContext.CounterEntity.Where(counter => counter.UserId == userId).ToArray();
                 ServiceLocator.Logger.Log(LogSeverity.Info,
-                    string.Format("DataAccess {0}: Find by User ID", GetType().FullName));
+                    $"DataAccess {GetType().FullName}: Find by User ID");
                 return counterEntities;
             }
             catch (Exception e)

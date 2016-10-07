@@ -10,19 +10,19 @@ namespace CounterMetrics.ClientProxies.DataAccess
             Channel.Create(counterEntity);
         }
 
-        public void DeleteByID(int counterID)
+        public void DeleteById(int counterId)
         {
-            Channel.DeleteByID(counterID);
+            Channel.DeleteById(counterId);
         }
 
-        public CounterEntity FindByID(int counterID)
+        public CounterEntity FindById(int counterId)
         {
-            return Channel.FindByID(counterID);
+            return Channel.FindById(counterId);
         }
 
-        public CounterEntity[] FindByUserID(int userID)
+        public CounterEntity[] FindByUserId(int userId)
         {
-            return Channel.FindByUserID(userID);
+            return Channel.FindByUserId(userId);
         }
     }
 }
