@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.Serialization;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Runtime.Serialization;
 
 namespace CounterMetrics.Contracts.Managers
 {
@@ -12,6 +7,7 @@ namespace CounterMetrics.Contracts.Managers
     {
         [DataMember]
         public string Name { get; set; }
+
         [DataMember]
         public string Password { get; set; }
     }

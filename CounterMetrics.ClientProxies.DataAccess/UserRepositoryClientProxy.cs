@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ServiceModel;
 using CounterMetrics.Contracts.DataAccess;
-using System.ServiceModel;
 
 namespace CounterMetrics.ClientProxies.DataAccess
 {
@@ -18,6 +13,16 @@ namespace CounterMetrics.ClientProxies.DataAccess
         public void DeleteByID(int userID)
         {
             Channel.DeleteByID(userID);
+        }
+
+        public UserEntity[] Find()
+        {
+            return Channel.Find();
+        }
+
+        public UserEntity FindByID(int userID)
+        {
+            return Channel.FindByID(userID);
         }
 
         public int GetFreeID()

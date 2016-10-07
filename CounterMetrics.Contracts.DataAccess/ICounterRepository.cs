@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.ServiceModel;
+﻿using System.ServiceModel;
 
 namespace CounterMetrics.Contracts.DataAccess
 {
@@ -12,10 +7,13 @@ namespace CounterMetrics.Contracts.DataAccess
     {
         [OperationContract]
         void Create(CounterEntity counterEntity);
+
         [OperationContract]
         void DeleteByID(int counterID);
+
         [OperationContract]
         CounterEntity FindByID(int counterID);
+
         [OperationContract]
         CounterEntity[] FindByUserID(int userID);
     }

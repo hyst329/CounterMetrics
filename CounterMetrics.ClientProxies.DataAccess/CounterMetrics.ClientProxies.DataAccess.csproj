@@ -66,6 +66,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="MetricsRetrieveRepositoryClientProxy.cs" />
+    <Compile Include="MetricsStoreRepositoryClientProxy.cs" />
+    <Compile Include="CounterRepositoryClientProxy.cs" />
     <Compile Include="UserRepositoryClientProxy.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

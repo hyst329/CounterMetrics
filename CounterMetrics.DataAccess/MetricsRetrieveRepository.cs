@@ -1,16 +1,13 @@
-﻿using CounterMetrics.Contracts.DataAccess;
-using CounterMetrics.Infrastructure;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using CounterMetrics.Contracts.DataAccess;
+using CounterMetrics.Infrastructure;
 
 namespace CounterMetrics.DataAccess
 {
-    class MetricsRetrieveRepository : IMetricsRetrieveRepository
+    internal class MetricsRetrieveRepository : IMetricsRetrieveRepository
     {
-        private DatabaseContext databaseContext;
+        private readonly DatabaseContext databaseContext;
 
         public MetricsRetrieveRepository(DatabaseContext databaseContext)
         {
@@ -22,11 +19,12 @@ namespace CounterMetrics.DataAccess
             //throw new NotImplementedException();
             try
             {
-                ServiceLocator.Logger.Log(LogSeverity.Info, String.Format("DataAccess {0}: Find", this.GetType().FullName));
-                int[] counters = this.databaseContext.CounterEntity.Where(counter => 
-                (!counterType.HasValue || counter.Type == counterType.Value) && (userEntity == null || counter.UserID == userEntity.ID))
-                .Select(counter => counter.ID).ToArray();
-                return this.databaseContext.MetricEntity.Where(metric => counters.Contains(metric.CounterID)).ToArray();
+                ServiceLocator.Logger.Log(LogSeverity.Info, string.Format("DataAccess {0}: Find", GetType().FullName));
+                var counters = databaseContext.CounterEntity.Where(counter =>
+                        (!counterType.HasValue || (counter.Type == counterType.Value)) &&
+                        ((userEntity == null) || (counter.UserID == userEntity.ID)))
+                    .Select(counter => counter.ID).ToArray();
+                return databaseContext.MetricEntity.Where(metric => counters.Contains(metric.CounterID)).ToArray();
             }
             catch (Exception e)
             {
@@ -40,9 +38,11 @@ namespace CounterMetrics.DataAccess
             //throw new NotImplementedException();
             try
             {
-                ServiceLocator.Logger.Log(LogSeverity.Info, String.Format("DataAccess {0}: Find", this.GetType().FullName));
-                return this.databaseContext.MetricEntity.Where(
-                    metric => (!dateTimeStart.HasValue || metric.MetricDate >= dateTimeStart) && (!dateTimeEnd.HasValue || metric.MetricDate <= dateTimeEnd))
+                ServiceLocator.Logger.Log(LogSeverity.Info, string.Format("DataAccess {0}: Find", GetType().FullName));
+                return databaseContext.MetricEntity.Where(
+                        metric =>
+                            (!dateTimeStart.HasValue || (metric.MetricDate >= dateTimeStart)) &&
+                            (!dateTimeEnd.HasValue || (metric.MetricDate <= dateTimeEnd)))
                     .ToArray();
             }
             catch (Exception e)
@@ -57,9 +57,12 @@ namespace CounterMetrics.DataAccess
             //throw new NotImplementedException();
             try
             {
-                DateTime now = DateTime.Now;
-                if (yearNumber == null) yearNumber = (now.Month >= monthNumber) ? now.Year : now.Year - 1;
-                return this.databaseContext.MetricEntity.Where(metric => metric.MetricDate.Year == yearNumber && metric.MetricDate.Month == monthNumber).ToArray();
+                var now = DateTime.Now;
+                if (yearNumber == null) yearNumber = now.Month >= monthNumber ? now.Year : now.Year - 1;
+                return
+                    databaseContext.MetricEntity.Where(
+                            metric => (metric.MetricDate.Year == yearNumber) && (metric.MetricDate.Month == monthNumber))
+                        .ToArray();
             }
             catch (Exception e)
             {

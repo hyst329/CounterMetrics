@@ -1,26 +1,27 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.Practices.Unity;
+﻿using Microsoft.Practices.Unity;
 
 namespace CounterMetrics.Infrastructure
 {
     public class ServiceLocator
     {
-        private static ServiceLocator _serviceLocatorInstance = null;
+        private static ServiceLocator _serviceLocatorInstance;
 
         private static UnityContainer _containerIoc;
 
         private ServiceLocator()
         {
-
         }
 
-        public static ILogger Logger { get { return _containerIoc.Resolve<ILogger>(); } }
+        public static ILogger Logger
+        {
+            get { return _containerIoc.Resolve<ILogger>(); }
+        }
 
-        public static IHasher Hasher { get { return _containerIoc.Resolve<IHasher>(); } }
+        public static IHasher Hasher
+        {
+            get { return _containerIoc.Resolve<IHasher>(); }
+        }
+
         public static ServiceLocator Build(UnityContainer containerIoc)
         {
             if (_serviceLocatorInstance == null)
@@ -31,6 +32,5 @@ namespace CounterMetrics.Infrastructure
 
             return _serviceLocatorInstance;
         }
-
     }
 }

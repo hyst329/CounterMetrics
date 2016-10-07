@@ -1,16 +1,12 @@
-﻿using CounterMetrics.Contracts.DataAccess;
+﻿using System;
+using CounterMetrics.Contracts.DataAccess;
 using CounterMetrics.Infrastructure;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CounterMetrics.DataAccess
 {
-    class MetricsStoreRepository : IMetricsStoreRepository
+    internal class MetricsStoreRepository : IMetricsStoreRepository
     {
-        private DatabaseContext databaseContext;
+        private readonly DatabaseContext databaseContext;
 
         public MetricsStoreRepository(DatabaseContext databaseContext)
         {
@@ -22,17 +18,18 @@ namespace CounterMetrics.DataAccess
             //throw new NotImplementedException();
             try
             {
-                ServiceLocator.Logger.Log(LogSeverity.Info, String.Format("DataAccess {0}: Persist", this.GetType().FullName));
-                this.databaseContext.MetricEntity.Add(metricEntity);
-                this.databaseContext.SaveChanges();
+                ServiceLocator.Logger.Log(LogSeverity.Info, string.Format("DataAccess {0}: Persist", GetType().FullName));
+                databaseContext.MetricEntity.Add(metricEntity);
+                databaseContext.SaveChanges();
             }
             catch (Exception e)
             {
                 ServiceLocator.Logger.Log(LogSeverity.Error, e.Message);
                 throw;
             }
-            ServiceLocator.Logger.Log(LogSeverity.Info, String.Format("Created metric of type {0} with value {1} and date {2}",
-                metricEntity.CounterID, metricEntity.MetricValue, metricEntity.MetricDate));
+            ServiceLocator.Logger.Log(LogSeverity.Info,
+                string.Format("Created metric of type {0} with value {1} and date {2}",
+                    metricEntity.CounterID, metricEntity.MetricValue, metricEntity.MetricDate));
         }
     }
 }
