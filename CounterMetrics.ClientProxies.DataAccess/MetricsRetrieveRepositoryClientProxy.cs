@@ -12,6 +12,11 @@ namespace CounterMetrics.ClientProxies.DataAccess
             return Channel.Find(counterType, userEntity);
         }
 
+        public MetricEntity[] FindAll()
+        {
+            return Channel.FindAll();
+        }
+
         public MetricEntity[] FindByDate(DateTime? dateTimeStart, DateTime? dateTimeEnd)
         {
             return Channel.FindByDate(dateTimeStart, dateTimeEnd);

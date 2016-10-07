@@ -4,7 +4,7 @@ using CounterMetrics.Infrastructure;
 
 namespace CounterMetrics.DataAccess
 {
-    internal class MetricsStoreRepository : IMetricsStoreRepository
+    public class MetricsStoreRepository : IMetricsStoreRepository
     {
         private readonly DatabaseContext _databaseContext;
 

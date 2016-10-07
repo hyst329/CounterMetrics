@@ -15,6 +15,9 @@ namespace CounterMetrics.Contracts.DataAccess
         CounterEntity FindById(int counterId);
 
         [OperationContract]
-        CounterEntity[] FindByUserId(int userId);
+        CounterEntity[] FindAll();
+
+        [OperationContract]
+        CounterEntity[] FindByUserId(int userId, CounterType? counterType);
     }
 }

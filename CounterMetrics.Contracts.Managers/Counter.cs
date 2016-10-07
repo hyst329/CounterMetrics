@@ -1,6 +1,16 @@
-﻿namespace CounterMetrics.Contracts.Managers
+﻿using System.Runtime.Serialization;
+using CounterMetrics.Contracts.DataAccess;
+
+namespace CounterMetrics.Contracts.Managers
 {
+    [DataContract]
     public class Counter
     {
+        [DataMember]
+        public int Id { get; set; }
+        [DataMember]
+        public int UserId { get; set; }
+        [DataMember]
+        public CounterType Type { get; set; }
     }
 }

@@ -56,7 +56,7 @@ namespace CounterMetrics.DataAccess
             try
             {
                 ServiceLocator.Logger.Log(LogSeverity.Info,
-                    $"DataAccess {GetType().FullName}: Find all");
+                    $"DataAccess {GetType().FullName}: FindAll all");
                 return _databaseContext.UserEntity.ToArray();
             }
             catch (Exception e)
@@ -72,7 +72,7 @@ namespace CounterMetrics.DataAccess
             try
             {
                 ServiceLocator.Logger.Log(LogSeverity.Info,
-                    $"DataAccess {GetType().FullName}: Find by ID");
+                    $"DataAccess {GetType().FullName}: FindAll by ID");
                 return _databaseContext.UserEntity.First(uE => uE.Id == userId);
             }
             catch (Exception e)

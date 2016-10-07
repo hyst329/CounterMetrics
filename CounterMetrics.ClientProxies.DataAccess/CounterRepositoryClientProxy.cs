@@ -15,14 +15,19 @@ namespace CounterMetrics.ClientProxies.DataAccess
             Channel.DeleteById(counterId);
         }
 
+        public CounterEntity[] FindAll()
+        {
+            return Channel.FindAll();
+        }
+
         public CounterEntity FindById(int counterId)
         {
             return Channel.FindById(counterId);
         }
 
-        public CounterEntity[] FindByUserId(int userId)
+        public CounterEntity[] FindByUserId(int userId, CounterType? counterType)
         {
-            return Channel.FindByUserId(userId);
+            return Channel.FindByUserId(userId, counterType);
         }
     }
 }

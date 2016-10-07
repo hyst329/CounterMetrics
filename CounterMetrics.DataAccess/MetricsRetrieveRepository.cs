@@ -5,7 +5,7 @@ using CounterMetrics.Infrastructure;
 
 namespace CounterMetrics.DataAccess
 {
-    internal class MetricsRetrieveRepository : IMetricsRetrieveRepository
+    public class MetricsRetrieveRepository : IMetricsRetrieveRepository
     {
         private readonly DatabaseContext _databaseContext;
 
@@ -33,12 +33,26 @@ namespace CounterMetrics.DataAccess
             }
         }
 
+        public MetricEntity[] FindAll()
+        {
+            try
+            {
+                ServiceLocator.Logger.Log(LogSeverity.Info, $"DataAccess {GetType().FullName}: Find All");
+                return _databaseContext.MetricEntity.ToArray();
+            }
+            catch (Exception e)
+            {
+                ServiceLocator.Logger.Log(LogSeverity.Error, e.Message);
+                throw;
+            }
+        }
+
         public MetricEntity[] FindByDate(DateTime? dateTimeStart, DateTime? dateTimeEnd)
         {
             //throw new NotImplementedException();
             try
             {
-                ServiceLocator.Logger.Log(LogSeverity.Info, $"DataAccess {GetType().FullName}: Find");
+                ServiceLocator.Logger.Log(LogSeverity.Info, $"DataAccess {GetType().FullName}: FindAll");
                 return _databaseContext.MetricEntity.Where(
                         metric =>
                             (!dateTimeStart.HasValue || (metric.MetricDate >= dateTimeStart)) &&

@@ -10,6 +10,9 @@ namespace CounterMetrics.Contracts.DataAccess
         MetricEntity[] Find(CounterType? counterType, UserEntity userEntity);
 
         [OperationContract]
+        MetricEntity[] FindAll();
+
+        [OperationContract]
         MetricEntity[] FindByDate(DateTime? dateTimeStart, DateTime? dateTimeEnd);
 
         [OperationContract]
