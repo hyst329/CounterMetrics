@@ -11,6 +11,7 @@ namespace CounterMetrics.Contracts.Managers
 
         [DataMember]
         public decimal MetricValue { get; set; }
+
         [DataMember]
         public DateTime MetricDate { get; set; }
     }

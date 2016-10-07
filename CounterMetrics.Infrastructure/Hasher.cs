@@ -3,7 +3,7 @@ using System.Text;
 
 namespace CounterMetrics.Infrastructure
 {
-    internal class Hasher : IHasher
+    public class Hasher : IHasher
     {
         private readonly MD5 _engine = MD5.Create();
 
@@ -18,7 +18,7 @@ namespace CounterMetrics.Infrastructure
 
             // Loop through each byte of the hashed data 
             // and format each one as a hexadecimal string.
-            foreach (byte t in data)
+            foreach (var t in data)
                 stringBuilder.Append(t.ToString("x2"));
 
             // Return the hexadecimal string.
