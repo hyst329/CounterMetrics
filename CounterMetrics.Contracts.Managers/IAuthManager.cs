@@ -1,14 +1,24 @@
-﻿using System.ServiceModel;
+﻿using System;
+using System.ServiceModel;
 
 namespace CounterMetrics.Contracts.Managers
 {
+    public struct LoginData
+    {
+        public Guid Guid { get; set; }
+        public int UserId { get; set; }
+    };
+
     [ServiceContract]
     public interface IAuthManager
     {
         [OperationContract]
-        void Login(User user);
+        LoginData? Login(User user);
 
         [OperationContract]
-        void Logout();
+        void Logout(Guid sessionGuid);
+
+        [OperationContract]
+        int? GetLoggedInUserId(Guid sessionGuid);
     }
 }

@@ -1,18 +1,24 @@
-﻿using System.ServiceModel;
+﻿using System;
+using System.ServiceModel;
 using CounterMetrics.Contracts.Managers;
 
 namespace CounterMetrics.ClientProxies.Managers
 {
     public class AuthManagerClientProxy : ClientBase<IAuthManager>, IAuthManager
     {
-        public void Login(User user)
+        public LoginData? Login(User user)
         {
-            Channel.Login(user);
+            return Channel.Login(user);
         }
 
-        public void Logout()
+        public void Logout(Guid sessionGuid)
         {
-            Channel.Logout();
+            Channel.Logout(sessionGuid);
+        }
+
+        public int? GetLoggedInUserId(Guid sessionGuid)
+        {
+            return Channel.GetLoggedInUserId(sessionGuid);
         }
     }
 }
