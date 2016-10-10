@@ -9,6 +9,7 @@ namespace CounterMetrics.Contracts.DataAccess
     public class UserEntity
     {
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         [DataMember]
         public int Id { get; set; }
 

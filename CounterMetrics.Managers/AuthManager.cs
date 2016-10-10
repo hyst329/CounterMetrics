@@ -16,6 +16,7 @@ namespace CounterMetrics.Managers
         public AuthManager(IUserRepository userRepository)
         {
             _userRepository = userRepository;
+            _sessions=new Dictionary<Guid, int>();
         }
 
         public LoginData? Login(User user)
@@ -27,7 +28,7 @@ namespace CounterMetrics.Managers
                 int userId =
                     _userRepository.Find()
                         .First(userEntity => userEntity.Name == user.Name && userEntity.PasswordHash == passwordHash).Id;
-                var guid = new Guid();
+                var guid = Guid.NewGuid();
                 _sessions[guid] = userId;
                 return new LoginData { Guid = guid, UserId = userId };
             }

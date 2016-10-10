@@ -46,7 +46,16 @@ namespace CounterMetrics.Managers
 
         public Metric[] FindByDate(DateTime? startDate, DateTime? endDate)
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
+            return _metricsRetrieveRepository.FindByDate(startDate, endDate).Select(
+                        metricEntity =>
+                            new Metric
+                            {
+                                CounterId = metricEntity.CounterId,
+                                MetricDate = metricEntity.MetricDate,
+                                MetricValue = metricEntity.MetricValue
+                            })
+                    .ToArray();
         }
 
         public Metric[] FindByType(int? userId, CounterType? counterType)
