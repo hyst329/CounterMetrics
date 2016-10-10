@@ -8,17 +8,19 @@ namespace CounterMetrics.Managers
     public class AccountManager : IAccountManager
     {
         private readonly IUserRepository _userRepository;
+        private readonly IHasher _hasher;
 
-        public AccountManager(IUserRepository userRepository)
+        public AccountManager(IUserRepository userRepository, IHasher hasher)
         {
             _userRepository = userRepository;
+            _hasher = hasher;
         }
 
         public bool Register(User user)
         {
             //throw new NotImplementedException();
             var newUserId = _userRepository.GetFreeId();
-            var passwordHash = ServiceLocator.Hasher.Hash(user.Password);
+            var passwordHash = _hasher.Hash(user.Password);
             if (_userRepository.Find().Count(userEntity => userEntity.Name == user.Name) != 0)
             {
                 return false;

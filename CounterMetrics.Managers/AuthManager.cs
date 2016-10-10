@@ -12,17 +12,19 @@ namespace CounterMetrics.Managers
     {
         private readonly IUserRepository _userRepository;
         private Dictionary<Guid, int> _sessions;
+        private readonly IHasher _hasher;
 
-        public AuthManager(IUserRepository userRepository)
+        public AuthManager(IUserRepository userRepository, IHasher hasher)
         {
             _userRepository = userRepository;
+            _hasher = hasher;
             _sessions=new Dictionary<Guid, int>();
         }
 
         public LoginData? Login(User user)
         {
             //throw new NotImplementedException();
-            var passwordHash = ServiceLocator.Hasher.Hash(user.Password);
+            var passwordHash = _hasher.Hash(user.Password);
             try
             {
                 int userId =
