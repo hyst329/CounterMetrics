@@ -5,9 +5,9 @@ namespace CounterMetrics.ClientProxies.Managers
 {
     public class AccountManagerClientProxy : ClientBase<IAccountManager>, IAccountManager
     {
-        public void Register(User user)
+        public bool Register(User user)
         {
-            Channel.Register(user);
+            return Channel.Register(user);
         }
     }
 }

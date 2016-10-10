@@ -6,6 +6,6 @@ namespace CounterMetrics.Contracts.Managers
     public interface IAccountManager
     {
         [OperationContract]
-        void Register(User user);
+        bool Register(User user);
     }
 }
