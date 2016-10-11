@@ -71,6 +71,7 @@
     <Compile Include="ICounterRepository.cs" />
     <Compile Include="IMetricsRetrieveRepository.cs" />
     <Compile Include="IMetricsStoreRepository.cs" />
+    <Compile Include="ISessionContextRepository.cs" />
     <Compile Include="IUserRepository.cs" />
     <Compile Include="MetricEntity.cs" />
     <Compile Include="UserEntity.cs" />
@@ -79,6 +80,12 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CounterMetrics.Infrastructure\CounterMetrics.Infrastructure.csproj">
+      <Project>{7EC1168A-BC31-470A-8E21-C07B95878A8B}</Project>
+      <Name>CounterMetrics.Infrastructure</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

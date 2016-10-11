@@ -85,6 +85,10 @@
       <Project>{AD930FD0-6A34-4944-8B1D-D70F77D32A4C}</Project>
       <Name>CounterMetrics.Contracts.DataAccess</Name>
     </ProjectReference>
+    <ProjectReference Include="..\CounterMetrics.Infrastructure\CounterMetrics.Infrastructure.csproj">
+      <Project>{7EC1168A-BC31-470A-8E21-C07B95878A8B}</Project>
+      <Name>CounterMetrics.Infrastructure</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

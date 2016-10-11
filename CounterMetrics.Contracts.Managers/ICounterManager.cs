@@ -1,4 +1,5 @@
-﻿using System.ServiceModel;
+﻿using System;
+using System.ServiceModel;
 using CounterMetrics.Contracts.DataAccess;
 
 namespace CounterMetrics.Contracts.Managers
@@ -7,15 +8,15 @@ namespace CounterMetrics.Contracts.Managers
     public interface ICounterManager
     {
         [OperationContract]
-        void Add(Counter counter);
+        void Add(Guid sessionGuid, Counter counter);
 
         [OperationContract]
-        void Remove(Counter counter);
+        void Remove(Guid sessionGuid, Counter counter);
 
         [OperationContract]
-        Counter[] FindByUserId(int userId, CounterType? counterType);
+        Counter[] FindOwned(Guid sessionGuid, CounterType? counterType);
 
         [OperationContract]
-        Counter[] FindAll();
+        Counter[] FindAll(Guid sessionGuid);
     }
 }

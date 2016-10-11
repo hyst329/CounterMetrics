@@ -10,16 +10,18 @@ namespace CounterMetrics.Managers
         private readonly IMetricsRetrieveRepository _metricsRetrieveRepository;
         private readonly IMetricsStoreRepository _metricsStoreRepository;
         private readonly IUserRepository _userRepository;
+        private readonly ISessionContextRepository _sessionContextRepository;
 
         public MetricsManager(IMetricsStoreRepository metricsStoreRepository,
-            IMetricsRetrieveRepository metricsRetrieveRepository, IUserRepository userRepository)
+            IMetricsRetrieveRepository metricsRetrieveRepository, IUserRepository userRepository, ISessionContextRepository sessionContextRepository)
         {
             _metricsStoreRepository = metricsStoreRepository;
             _metricsRetrieveRepository = metricsRetrieveRepository;
             _userRepository = userRepository;
+            _sessionContextRepository = sessionContextRepository;
         }
 
-        public void Add(Metric metric)
+        public void Add(Guid sessionGuid, Metric metric)
         {
             _metricsStoreRepository.Persist(new MetricEntity
             {
@@ -29,7 +31,7 @@ namespace CounterMetrics.Managers
             });
         }
 
-        public Metric[] Find()
+        public Metric[] Find(Guid sessionGuid)
         {
             return
                 _metricsRetrieveRepository.FindAll()
@@ -44,7 +46,7 @@ namespace CounterMetrics.Managers
                     .ToArray();
         }
 
-        public Metric[] FindByDate(DateTime? startDate, DateTime? endDate)
+        public Metric[] FindByDate(Guid sessionGuid, DateTime? startDate, DateTime? endDate)
         {
             //throw new NotImplementedException();
             return _metricsRetrieveRepository.FindByDate(startDate, endDate).Select(
@@ -58,9 +60,10 @@ namespace CounterMetrics.Managers
                     .ToArray();
         }
 
-        public Metric[] FindByType(int? userId, CounterType? counterType)
+        public Metric[] FindByType(Guid sessionGuid, CounterType? counterType)
         {
-            if (userId == null) return Find();
+            //if (userId == null) return Find(sessionGuid);
+            int? userId = _sessionContextRepository.GetUserId(sessionGuid);
             var userEntity = _userRepository.FindById(userId.Value);
             return
                 _metricsRetrieveRepository.Find(counterType, userEntity)
@@ -75,7 +78,7 @@ namespace CounterMetrics.Managers
                     .ToArray();
         }
 
-        public Metric[] GetStaticticsForMonth(int monthNumber, int? yearNumber = null)
+        public Metric[] GetStaticticsForMonth(Guid sessionGuid, int monthNumber, int? yearNumber = null)
         {
             var now = DateTime.Now;
             if (yearNumber == null) yearNumber = monthNumber > now.Month ? now.Year - 1 : now.Year;

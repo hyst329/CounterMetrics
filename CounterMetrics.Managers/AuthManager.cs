@@ -11,17 +11,17 @@ namespace CounterMetrics.Managers
     public class AuthManager : IAuthManager
     {
         private readonly IUserRepository _userRepository;
-        private Dictionary<Guid, int> _sessions;
+        private readonly ISessionContextRepository _sessionContextRepository;
         private readonly IHasher _hasher;
 
-        public AuthManager(IUserRepository userRepository, IHasher hasher)
+        public AuthManager(IUserRepository userRepository, ISessionContextRepository sessionContextRepository, IHasher hasher)
         {
             _userRepository = userRepository;
             _hasher = hasher;
-            _sessions=new Dictionary<Guid, int>();
+            _sessionContextRepository = sessionContextRepository;
         }
 
-        public LoginData? Login(User user)
+        public ISessionContext Login(User user)
         {
             //throw new NotImplementedException();
             var passwordHash = _hasher.Hash(user.Password);
@@ -30,9 +30,7 @@ namespace CounterMetrics.Managers
                 int userId =
                     _userRepository.Find()
                         .First(userEntity => userEntity.Name == user.Name && userEntity.PasswordHash == passwordHash).Id;
-                var guid = Guid.NewGuid();
-                _sessions[guid] = userId;
-                return new LoginData { Guid = guid, UserId = userId };
+                return _sessionContextRepository.Add(userId);
             }
             catch (InvalidOperationException)
             {
@@ -44,15 +42,8 @@ namespace CounterMetrics.Managers
         public void Logout(Guid sessionGuid)
         {
             //throw new NotImplementedException();
-            _sessions.Remove(sessionGuid);
+            _sessionContextRepository.Remove(sessionGuid);
 
-        }
-
-        public int? GetLoggedInUserId(Guid sessionGuid)
-        {
-            int result;
-            if (_sessions.TryGetValue(sessionGuid, out result)) return result;
-            return null;
         }
     }
 }

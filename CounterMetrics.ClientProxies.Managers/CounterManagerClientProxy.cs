@@ -1,4 +1,5 @@
-﻿using System.ServiceModel;
+﻿using System;
+using System.ServiceModel;
 using CounterMetrics.Contracts.DataAccess;
 using CounterMetrics.Contracts.Managers;
 
@@ -6,24 +7,24 @@ namespace CounterMetrics.ClientProxies.Managers
 {
     public class CounterManagerClientProxy : ClientBase<ICounterManager>, ICounterManager
     {
-        public void Add(Counter counter)
+        public void Add(Guid sessionGuid, Counter counter)
         {
-            Channel.Add(counter);
+            Channel.Add(sessionGuid, counter);
         }
 
-        public void Remove(Counter counter)
+        public void Remove(Guid sessionGuid, Counter counter)
         {
-            Channel.Remove(counter);
+            Channel.Remove(sessionGuid, counter);
         }
 
-        public Counter[] FindByUserId(int userId, CounterType? counterType)
+        public Counter[] FindOwned(Guid sessionGuid, CounterType? counterType)
         {
-            return Channel.FindByUserId(userId, counterType);
+            return Channel.FindOwned(sessionGuid, counterType);
         }
 
-        public Counter[] FindAll()
+        public Counter[] FindAll(Guid sessionGuid)
         {
-            return Channel.FindAll();
+            return Channel.FindAll(sessionGuid);
         }
     }
 }
