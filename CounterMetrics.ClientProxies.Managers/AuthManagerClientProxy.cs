@@ -1,5 +1,4 @@
-﻿using System;
-using System.ServiceModel;
+﻿using System.ServiceModel;
 using CounterMetrics.Contracts.Managers;
 using CounterMetrics.Infrastructure;
 
@@ -12,9 +11,9 @@ namespace CounterMetrics.ClientProxies.Managers
             return Channel.Login(user);
         }
 
-        public void Logout(Guid sessionGuid)
+        public void Logout()
         {
-            Channel.Logout(sessionGuid);
+            Channel.Logout();
         }
     }
 }

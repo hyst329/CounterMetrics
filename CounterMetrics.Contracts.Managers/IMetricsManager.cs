@@ -8,18 +8,18 @@ namespace CounterMetrics.Contracts.Managers
     public interface IMetricsManager
     {
         [OperationContract]
-        void Add(Guid sessionGuid, Metric metric);
+        void Add(Metric metric);
 
         [OperationContract]
-        Metric[] FindByType(Guid sessionGuid, CounterType? counterType);
+        Metric[] FindByType(CounterType? counterType);
 
         [OperationContract]
-        Metric[] Find(Guid sessionGuid);
+        Metric[] Find();
 
         [OperationContract]
-        Metric[] FindByDate(Guid sessionGuid, DateTime? startDate, DateTime? endDate);
+        Metric[] FindByDate(DateTime? startDate, DateTime? endDate);
 
         [OperationContract]
-        Metric[] GetStaticticsForMonth(Guid sessionGuid, int monthNumber, int? yearNumber = null);
+        Metric[] GetStaticticsForMonth(int monthNumber, int? yearNumber = null);
     }
 }

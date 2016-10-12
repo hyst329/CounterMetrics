@@ -7,29 +7,29 @@ namespace CounterMetrics.ClientProxies.Managers
 {
     public class MetricsManagerClientProxy : ClientBase<IMetricsManager>, IMetricsManager
     {
-        public void Add(Guid sessionGuid, Metric metric)
+        public void Add(Metric metric)
         {
-            Channel.Add(sessionGuid, metric);
+            Channel.Add(metric);
         }
 
-        public Metric[] Find(Guid sessionGuid)
+        public Metric[] Find()
         {
-            return Channel.Find(sessionGuid);
+            return Channel.Find();
         }
 
-        public Metric[] FindByDate(Guid sessionGuid, DateTime? startDate, DateTime? endDate)
+        public Metric[] FindByDate(DateTime? startDate, DateTime? endDate)
         {
-            return Channel.FindByDate(sessionGuid, startDate, endDate);
+            return Channel.FindByDate(startDate, endDate);
         }
 
-        public Metric[] GetStaticticsForMonth(Guid sessionGuid, int monthNumber, int? yearNumber = null)
+        public Metric[] GetStaticticsForMonth(int monthNumber, int? yearNumber = null)
         {
-            return Channel.GetStaticticsForMonth(sessionGuid, monthNumber, yearNumber);
+            return Channel.GetStaticticsForMonth(monthNumber, yearNumber);
         }
 
-        public Metric[] FindByType(Guid sessionGuid, CounterType? counterType)
+        public Metric[] FindByType(CounterType? counterType)
         {
-            return Channel.FindByType(sessionGuid, counterType);
+            return Channel.FindByType(counterType);
         }
     }
 }

@@ -7,4 +7,9 @@ namespace CounterMetrics.Infrastructure
         Guid? SessionGuid { get; set; }
         int UserId { get; set; }
     }
+
+    public interface ISessionContextHelper
+    {
+        ISessionContext Instance { get; }
+    }
 }

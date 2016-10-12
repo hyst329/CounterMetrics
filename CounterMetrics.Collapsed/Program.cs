@@ -1,5 +1,6 @@
 ﻿using System;
 using CounterMetrics.Contracts.Managers;
+using CounterMetrics.Infrastructure;
 using Microsoft.Practices.Unity;
 
 namespace CounterMetrics.Collapsed
@@ -14,7 +15,9 @@ namespace CounterMetrics.Collapsed
             var authManager = (IAuthManager) container.Resolve(typeof(IAuthManager));
             var counterManager = (ICounterManager) container.Resolve(typeof(ICounterManager));
             var metricsManager = (IMetricsManager) container.Resolve(typeof(IMetricsManager));
-            var @operator = new ConsoleOperator(accountManager, authManager, counterManager, metricsManager);
+            var sessionContextHelper = (ISessionContextHelper) container.Resolve(typeof(ISessionContextHelper));
+            var @operator = new ConsoleOperator(accountManager, authManager, counterManager, metricsManager,
+                sessionContextHelper);
             @operator.Operate();
             Console.ReadKey();
         }

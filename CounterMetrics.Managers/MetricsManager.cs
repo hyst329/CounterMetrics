@@ -2,6 +2,7 @@
 using System.Linq;
 using CounterMetrics.Contracts.DataAccess;
 using CounterMetrics.Contracts.Managers;
+using CounterMetrics.Infrastructure;
 
 namespace CounterMetrics.Managers
 {
@@ -9,19 +10,23 @@ namespace CounterMetrics.Managers
     {
         private readonly IMetricsRetrieveRepository _metricsRetrieveRepository;
         private readonly IMetricsStoreRepository _metricsStoreRepository;
-        private readonly IUserRepository _userRepository;
+        private readonly ISessionContextHelper _sessionContextHelper;
         private readonly ISessionContextRepository _sessionContextRepository;
+        private readonly IUserRepository _userRepository;
 
         public MetricsManager(IMetricsStoreRepository metricsStoreRepository,
-            IMetricsRetrieveRepository metricsRetrieveRepository, IUserRepository userRepository, ISessionContextRepository sessionContextRepository)
+            IMetricsRetrieveRepository metricsRetrieveRepository, IUserRepository userRepository,
+            ISessionContextRepository sessionContextRepository,
+            ISessionContextHelper sessionContextHelper)
         {
             _metricsStoreRepository = metricsStoreRepository;
             _metricsRetrieveRepository = metricsRetrieveRepository;
             _userRepository = userRepository;
             _sessionContextRepository = sessionContextRepository;
+            _sessionContextHelper = sessionContextHelper;
         }
 
-        public void Add(Guid sessionGuid, Metric metric)
+        public void Add(Metric metric)
         {
             _metricsStoreRepository.Persist(new MetricEntity
             {
@@ -31,7 +36,7 @@ namespace CounterMetrics.Managers
             });
         }
 
-        public Metric[] Find(Guid sessionGuid)
+        public Metric[] Find()
         {
             return
                 _metricsRetrieveRepository.FindAll()
@@ -46,24 +51,24 @@ namespace CounterMetrics.Managers
                     .ToArray();
         }
 
-        public Metric[] FindByDate(Guid sessionGuid, DateTime? startDate, DateTime? endDate)
+        public Metric[] FindByDate(DateTime? startDate, DateTime? endDate)
         {
             //throw new NotImplementedException();
             return _metricsRetrieveRepository.FindByDate(startDate, endDate).Select(
-                        metricEntity =>
-                            new Metric
-                            {
-                                CounterId = metricEntity.CounterId,
-                                MetricDate = metricEntity.MetricDate,
-                                MetricValue = metricEntity.MetricValue
-                            })
-                    .ToArray();
+                    metricEntity =>
+                        new Metric
+                        {
+                            CounterId = metricEntity.CounterId,
+                            MetricDate = metricEntity.MetricDate,
+                            MetricValue = metricEntity.MetricValue
+                        })
+                .ToArray();
         }
 
-        public Metric[] FindByType(Guid sessionGuid, CounterType? counterType)
+        public Metric[] FindByType(CounterType? counterType)
         {
             //if (userId == null) return Find(sessionGuid);
-            int? userId = _sessionContextRepository.GetUserId(sessionGuid);
+            var userId = _sessionContextRepository.GetUserId(_sessionContextHelper.Instance.SessionGuid.Value);
             var userEntity = _userRepository.FindById(userId.Value);
             return
                 _metricsRetrieveRepository.Find(counterType, userEntity)
@@ -78,7 +83,7 @@ namespace CounterMetrics.Managers
                     .ToArray();
         }
 
-        public Metric[] GetStaticticsForMonth(Guid sessionGuid, int monthNumber, int? yearNumber = null)
+        public Metric[] GetStaticticsForMonth(int monthNumber, int? yearNumber = null)
         {
             var now = DateTime.Now;
             if (yearNumber == null) yearNumber = monthNumber > now.Month ? now.Year - 1 : now.Year;

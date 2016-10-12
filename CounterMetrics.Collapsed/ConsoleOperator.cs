@@ -8,29 +8,31 @@ using CounterMetrics.Infrastructure;
 
 namespace CounterMetrics.Collapsed
 {
-    internal class ConsoleOperator
+    public class ConsoleOperator
     {
         public delegate void MenuMethod();
 
         private readonly IAccountManager _accountManager;
         private readonly IAuthManager _authManager;
-        private ICounterManager _counterManager;
-        private Dictionary<int, string> _menu;
-        private Dictionary<int, MenuMethod> _menuFunctions;
-        private Dictionary<int, string> _menuLogon;
-        private Dictionary<int, MenuMethod> _menuLogonFunctions;
         private readonly IMetricsManager _metricsManager;
+        private readonly ISessionContextHelper _sessionContextHelper;
+        private readonly ICounterManager _counterManager;
+        private readonly Dictionary<int, string> _menu;
+        private readonly Dictionary<int, MenuMethod> _menuFunctions;
+        private readonly Dictionary<int, string> _menuLogon;
+        private readonly Dictionary<int, MenuMethod> _menuLogonFunctions;
 
         private bool _shouldExit;
         private ISessionContext _token;
 
         public ConsoleOperator(IAccountManager accountManager, IAuthManager authManager, ICounterManager counterManager,
-            IMetricsManager metricsManager)
+            IMetricsManager metricsManager, ISessionContextHelper sessionContextHelper)
         {
             _accountManager = accountManager;
             _authManager = authManager;
             _counterManager = counterManager;
             _metricsManager = metricsManager;
+            _sessionContextHelper = sessionContextHelper;
 
             _menu = new Dictionary<int, string>
             {
@@ -76,13 +78,13 @@ namespace CounterMetrics.Collapsed
             {
                 var menu = _token != null ? _menu : _menuLogon;
                 var menuFunctions = _token != null ? _menuFunctions : _menuLogonFunctions;
-                int choice = 0;
+                var choice = 0;
                 ShowMenu(menu);
                 while (!menu.ContainsKey(choice))
                 {
                     Console.Write("Enter your choice: ");
-                    string line = Console.ReadLine();
-                    if (!Int32.TryParse(line, out choice)) choice = 0;
+                    var line = Console.ReadLine();
+                    if (!int.TryParse(line, out choice)) choice = 0;
                 }
                 menuFunctions[choice]();
             }
@@ -92,7 +94,7 @@ namespace CounterMetrics.Collapsed
         {
             try
             {
-                var res = _metricsManager.FindByType(_token.SessionGuid.Value, null);
+                var res = _metricsManager.FindByType(null);
                 ShowMetrics(res);
             }
             catch (Exception exception)
@@ -112,17 +114,16 @@ namespace CounterMetrics.Collapsed
             try
             {
                 Console.Write("Enter new counter ID: ");
-                var idstr = Console.ReadLine();
-                int counterId = Int32.Parse(idstr);
+                var idstr = Console.ReadLine() ?? "";
+                var counterId = int.Parse(idstr);
                 Console.Write("Enter owner ID: ");
-                var uidstr = Console.ReadLine();
-                int userId = Int32.Parse(uidstr);
+                var uidstr = Console.ReadLine() ?? "";
+                var userId = int.Parse(uidstr);
                 Console.Write(
-                "Enter '0' or 'Water' to add a water counter, or '1' or 'Electricity' to ad an electricity one: ");
-                var tp = Console.ReadLine();
-                var type = (CounterType)Enum.Parse(typeof(CounterType), tp);
-                _counterManager.Add(_token.SessionGuid.Value, new Counter { Id = counterId, UserId = userId, Type = type });
-
+                    "Enter '0' or 'Water' to add a water counter, or '1' or 'Electricity' to ad an electricity one: ");
+                var tp = Console.ReadLine() ?? "";
+                var type = (CounterType) Enum.Parse(typeof(CounterType), tp);
+                _counterManager.Add(new Counter {Id = counterId, UserId = userId, Type = type});
             }
             catch (Exception exception)
             {
@@ -135,21 +136,33 @@ namespace CounterMetrics.Collapsed
             //throw new NotImplementedException();
             try
             {
-                Console.Write("Enter counter ID: ");
-                var idstr = Console.ReadLine();
-                int counterId = Int32.Parse(idstr);
+                var counters = _counterManager.FindOwned(null);
+                Console.Write("Enter counter ID ");
+                Console.Write("[");
+                foreach (var counter in counters)
+                {
+                    Console.Write("{0} ", counter.Id);
+                }
+                Console.Write("]:");
+                var idstr = Console.ReadLine() ?? "";
+                var counterId = int.Parse(idstr);
+                
                 if (
-                    _counterManager.FindOwned(_token.SessionGuid.Value, null)
+                    counters
                         .Count(counter => counter.Id == counterId) == 0)
                 {
                     Console.WriteLine("Counter not found or not owned by logged-in user");
                     return;
                 }
                 Console.Write("Enter metric value: ");
-                var mvstr = Console.ReadLine();
-                decimal metricValue = Decimal.Parse(mvstr);
-                _metricsManager.Add(_token.SessionGuid.Value, new Metric { CounterId = counterId, MetricDate = DateTime.Now, MetricValue = metricValue });
-
+                var mvstr = Console.ReadLine() ?? "";
+                var metricValue = decimal.Parse(mvstr);
+                _metricsManager.Add(new Metric
+                {
+                    CounterId = counterId,
+                    MetricDate = DateTime.Now,
+                    MetricValue = metricValue
+                });
             }
             catch (Exception exception)
             {
@@ -163,16 +176,21 @@ namespace CounterMetrics.Collapsed
             var username = Console.ReadLine();
             Console.Write("Password: ");
             var password = GetConsoleSecurePassword();
-            _token = _authManager.Login(new User { Name = username, Password = password });
+            _token = _authManager.Login(new User {Name = username, Password = password});
             if (_token == null)
                 Console.WriteLine("Cannot log in username and/or password may be incorrect");
             else
+            {
                 Console.WriteLine("Login successful, user ID {0}", _token.UserId);
+                _sessionContextHelper.Instance.SessionGuid = _token.SessionGuid;
+                _sessionContextHelper.Instance.UserId = _token.UserId;
+            }
         }
 
         public void Logout()
         {
             _token = null;
+            _sessionContextHelper.Instance.SessionGuid = null;
             Console.WriteLine();
         }
 
@@ -189,7 +207,7 @@ namespace CounterMetrics.Collapsed
                 Console.WriteLine("Passwords do not match");
                 return;
             }
-            var result = _accountManager.Register(new User { Name = username, Password = password1 });
+            var result = _accountManager.Register(new User {Name = username, Password = password1});
             Console.WriteLine(result ? "Registration successful" : "Unable to register user, may be already present");
         }
 
@@ -204,9 +222,9 @@ namespace CounterMetrics.Collapsed
                 "Enter '0' or 'Water' to select water counters, or '1' or 'Electricity' to select electricity ones: ");
             try
             {
-                var tp = Console.ReadLine();
-                var type = (CounterType)Enum.Parse(typeof(CounterType), tp);
-                var res = _metricsManager.FindByType(_token.SessionGuid.Value, type);
+                var tp = Console.ReadLine() ?? "";
+                var type = (CounterType) Enum.Parse(typeof(CounterType), tp);
+                var res = _metricsManager.FindByType(type);
                 ShowMetrics(res);
             }
             catch (Exception exception)
@@ -225,7 +243,7 @@ namespace CounterMetrics.Collapsed
                 Console.Write("Enter end date : ");
                 var ed = Console.ReadLine();
                 var end = DateTime.Parse(ed);
-                var res = _metricsManager.FindByDate(_token.SessionGuid.Value, start, end);
+                var res = _metricsManager.FindByDate(start, end);
                 ShowMetrics(res);
             }
             catch (Exception exception)
@@ -243,7 +261,7 @@ namespace CounterMetrics.Collapsed
             }
             try
             {
-                var res = _metricsManager.Find(_token.SessionGuid.Value);
+                var res = _metricsManager.Find();
                 ShowMetrics(res);
             }
             catch (Exception exception)
@@ -290,9 +308,9 @@ namespace CounterMetrics.Collapsed
         {
             Console.WriteLine("METRIC DATA: ");
             if (metrics.Length == 0) Console.WriteLine("No data to display.");
-            Counter[] counters = _counterManager.FindAll(_token.SessionGuid.Value);
-            string hLine = "".PadRight(Console.WindowWidth, '-');
-            string tableFormat = "|{0,10}|{3,5}|{1,28}|{2,9} {4,5} ({5,14})|";
+            var counters = _counterManager.FindAll();
+            var hLine = "".PadRight(Console.WindowWidth, '-');
+            var tableFormat = "|{0,10}|{3,5}|{1,28}|{2,9} {4,5} ({5,14})|";
             Console.Write(hLine);
             Console.Write(tableFormat, "Ctr ID", "Date", "Value", "UID", "units", "type");
             Console.Write(hLine);
@@ -306,7 +324,7 @@ namespace CounterMetrics.Collapsed
             Console.Write(hLine);
         }
 
-        private bool CheckForAdmin() => _token != null && _token.UserId == 1;
+        private bool CheckForAdmin() => (_token != null) && (_token.UserId == 1);
 
         private string GetUnits(CounterType counterType)
         {

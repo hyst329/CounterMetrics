@@ -22,7 +22,7 @@ namespace CounterMetrics.DataAccess
                 ServiceLocator.Logger.Log(LogSeverity.Info, $"DataAccess {GetType().FullName}: Find");
                 var counters = _databaseContext.CounterEntity.Where(counter =>
                         (!counterType.HasValue || (counter.Type == counterType.Value)) &&
-                        counter.UserId == userEntity.Id)
+                        (counter.UserId == userEntity.Id))
                     .Select(counter => counter.Id).ToArray();
                 return _databaseContext.MetricEntity.Where(metric => counters.Contains(metric.CounterId)).ToArray();
             }
