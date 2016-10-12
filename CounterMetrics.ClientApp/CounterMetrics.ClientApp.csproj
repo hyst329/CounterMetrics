@@ -60,6 +60,8 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.ServiceModel.Activation" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -69,12 +71,35 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Bootstrapper.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CounterMetrics.ClientProxies.DataAccess\CounterMetrics.ClientProxies.DataAccess.csproj">
+      <Project>{89ee8639-b4e8-4a68-9e70-f294045904b6}</Project>
+      <Name>CounterMetrics.ClientProxies.DataAccess</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CounterMetrics.ClientProxies.Managers\CounterMetrics.ClientProxies.Managers.csproj">
+      <Project>{7b41e65d-aaf5-48b0-8b7a-47aa10f91781}</Project>
+      <Name>CounterMetrics.ClientProxies.Managers</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CounterMetrics.Contracts.DataAccess\CounterMetrics.Contracts.DataAccess.csproj">
+      <Project>{ad930fd0-6a34-4944-8b1d-d70f77d32a4c}</Project>
+      <Name>CounterMetrics.Contracts.DataAccess</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CounterMetrics.Contracts.Managers\CounterMetrics.Contracts.Managers.csproj">
+      <Project>{ee3b040e-e8fd-423a-89e4-5b3b43f41b24}</Project>
+      <Name>CounterMetrics.Contracts.Managers</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CounterMetrics.Infrastructure\CounterMetrics.Infrastructure.csproj">
+      <Project>{7ec1168a-bc31-470a-8e21-c07b95878a8b}</Project>
+      <Name>CounterMetrics.Infrastructure</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
