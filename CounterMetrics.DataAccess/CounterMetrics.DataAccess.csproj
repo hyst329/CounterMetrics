@@ -70,7 +70,8 @@
     <Compile Include="CounterRepository.cs" />
     <Compile Include="MetricsRetrieveRepository.cs" />
     <Compile Include="MetricsStoreRepository.cs" />
-    <Compile Include="SessionContextRepository.cs" />
+    <Compile Include="WcfSessionContextRepository.cs" />
+    <Compile Include="NoWcfSessionContextRepository.cs" />
     <Compile Include="UserRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

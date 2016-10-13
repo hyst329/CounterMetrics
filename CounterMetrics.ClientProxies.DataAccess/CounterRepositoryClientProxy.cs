@@ -5,6 +5,10 @@ namespace CounterMetrics.ClientProxies.DataAccess
 {
     public class CounterRepositoryClientProxy : ClientBase<ICounterRepository>, ICounterRepository
     {
+        public CounterRepositoryClientProxy(string endpointConfigurationName) : base(endpointConfigurationName)
+        {
+        }
+
         public void Create(CounterEntity counterEntity)
         {
             Channel.Create(counterEntity);

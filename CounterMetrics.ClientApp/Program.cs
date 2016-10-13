@@ -9,7 +9,7 @@ namespace CounterMetrics.ClientApp
     {
         private static void Main(string[] args)
         {
-            Console.Title = "Collapsed Client";
+            Console.Title = "Client App";
             var container = Bootstrapper.Init();
             var accountManager = (IAccountManager)container.Resolve(typeof(IAccountManager));
             var authManager = (IAuthManager)container.Resolve(typeof(IAuthManager));

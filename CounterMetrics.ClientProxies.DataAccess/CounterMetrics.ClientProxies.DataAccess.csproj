@@ -59,6 +59,7 @@
     <Reference Include="System.Core" />
     <Reference Include="System.ServiceModel" />
     <Reference Include="System.ServiceModel.Activation" />
+    <Reference Include="System.Transactions" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -70,6 +71,7 @@
     <Compile Include="MetricsRetrieveRepositoryClientProxy.cs" />
     <Compile Include="MetricsStoreRepositoryClientProxy.cs" />
     <Compile Include="CounterRepositoryClientProxy.cs" />
+    <Compile Include="SessionContextRepositoryClientProxy.cs" />
     <Compile Include="UserRepositoryClientProxy.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -81,6 +83,10 @@
     <ProjectReference Include="..\CounterMetrics.Contracts.DataAccess\CounterMetrics.Contracts.DataAccess.csproj">
       <Project>{ad930fd0-6a34-4944-8b1d-d70f77d32a4c}</Project>
       <Name>CounterMetrics.Contracts.DataAccess</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CounterMetrics.Infrastructure\CounterMetrics.Infrastructure.csproj">
+      <Project>{7EC1168A-BC31-470A-8E21-C07B95878A8B}</Project>
+      <Name>CounterMetrics.Infrastructure</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

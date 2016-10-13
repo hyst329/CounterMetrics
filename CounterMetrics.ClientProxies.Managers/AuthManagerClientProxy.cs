@@ -1,6 +1,7 @@
 ﻿using System.ServiceModel;
 using CounterMetrics.Contracts.Managers;
 using CounterMetrics.Infrastructure;
+using System.Transactions;
 
 namespace CounterMetrics.ClientProxies.Managers
 {

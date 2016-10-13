@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Messaging;
+using System.Configuration;
 using System.ServiceModel;
 using CounterMetrics.Contracts.DataAccess;
 using Microsoft.Practices.Unity;

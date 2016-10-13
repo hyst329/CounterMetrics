@@ -19,7 +19,7 @@ namespace CounterMetrics.Collapsed
             unityContainer.RegisterType<IUserRepository, UserRepository>();
             unityContainer.RegisterType<ICounterRepository, CounterRepository>();
             unityContainer.RegisterInstance<ISessionContextRepository>(
-                unityContainer.Resolve<SessionContextRepository>());
+                unityContainer.Resolve<NoWcfSessionContextRepository>());
             unityContainer.RegisterType<IMetricsStoreRepository, MetricsStoreRepository>();
             unityContainer.RegisterType<IMetricsRetrieveRepository, MetricsRetrieveRepository>();
             unityContainer.RegisterType<IUserRepository, UserRepository>();

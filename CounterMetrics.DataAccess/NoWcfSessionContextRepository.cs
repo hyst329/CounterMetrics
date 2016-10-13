@@ -5,11 +5,11 @@ using CounterMetrics.Infrastructure;
 
 namespace CounterMetrics.DataAccess
 {
-    public class SessionContextRepository : ISessionContextRepository
+    public class NoWcfSessionContextRepository : ISessionContextRepository
     {
         private readonly Dictionary<Guid, int> _sessions;
 
-        public SessionContextRepository()
+        public NoWcfSessionContextRepository()
         {
             _sessions = new Dictionary<Guid, int>();
         }

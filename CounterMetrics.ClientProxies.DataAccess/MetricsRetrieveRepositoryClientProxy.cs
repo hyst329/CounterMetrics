@@ -7,6 +7,10 @@ namespace CounterMetrics.ClientProxies.DataAccess
     public class MetricsRetrieveRepositoryClientProxy : ClientBase<IMetricsRetrieveRepository>,
         IMetricsRetrieveRepository
     {
+        public MetricsRetrieveRepositoryClientProxy(string endpointConfigurationName) : base(endpointConfigurationName)
+        {
+        }
+
         public MetricEntity[] Find(CounterType? counterType, UserEntity userEntity)
         {
             return Channel.Find(counterType, userEntity);
