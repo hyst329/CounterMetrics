@@ -19,7 +19,7 @@ namespace CounterMetrics.ClientApp
             unityContainer.RegisterType<IMetricsStoreRepository, MetricsStoreRepositoryClientProxy>();
             unityContainer.RegisterType<IMetricsRetrieveRepository, MetricsRetrieveRepositoryClientProxy>();
             unityContainer.RegisterType<IUserRepository, UserRepositoryClientProxy>();
-            unityContainer.RegisterType<ISessionContextHelper, NoWcfSessionContextHelper>();
+            unityContainer.RegisterType<ISessionContextHelper, WcfSessionContextHelper>();
             unityContainer.RegisterType<IAccountManager, AccountManagerClientProxy>();
             unityContainer.RegisterType<IAuthManager, AuthManagerClientProxy>();
             unityContainer.RegisterType<ICounterManager, CounterManagerClientProxy>();

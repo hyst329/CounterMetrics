@@ -5,6 +5,7 @@ using CounterMetrics.Infrastructure;
 namespace CounterMetrics.Contracts.DataAccess
 {
     [ServiceContract]
+    [ServiceKnownType(typeof(WcfSessionContextHelper))]
     public interface ISessionContextRepository
     {
         [OperationContract]
