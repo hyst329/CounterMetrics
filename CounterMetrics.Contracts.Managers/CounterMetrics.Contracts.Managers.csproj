@@ -73,6 +73,7 @@
     <Compile Include="IAuthManager.cs" />
     <Compile Include="ICounterManager.cs" />
     <Compile Include="IMetricsManager.cs" />
+    <Compile Include="LoginData.cs" />
     <Compile Include="Metric.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="User.cs" />

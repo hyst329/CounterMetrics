@@ -36,10 +36,9 @@ namespace CounterMetrics.Managers
 
         public Counter[] FindOwned(CounterType? counterType)
         {
-            var userId = _sessionContextRepository.GetUserId(_sessionContextHelper.Instance.SessionGuid.Value);
-            if (!userId.HasValue) return default(Counter[]);
+            var userId = _sessionContextHelper.Instance.UserId;
             return
-                _counterRepository.FindByUserId(userId.Value, counterType)
+                _counterRepository.FindByUserId(userId, counterType)
                     .Select(counter => new Counter {Id = counter.Id, Type = counter.Type, UserId = counter.UserId})
                     .ToArray();
         }

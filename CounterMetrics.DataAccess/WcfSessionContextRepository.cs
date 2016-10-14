@@ -7,18 +7,22 @@ namespace CounterMetrics.DataAccess
 {
     public class WcfSessionContextRepository : ISessionContextRepository
     {
+        private readonly WcfSessionContextHelper _sessionContextHelper;
         private readonly Dictionary<Guid, int> _sessions;
 
-        public WcfSessionContextRepository()
+        public WcfSessionContextRepository(WcfSessionContextHelper sessionContextHelper)
         {
+            _sessionContextHelper = sessionContextHelper;
             _sessions = new Dictionary<Guid, int>();
         }
 
-        public ISessionContext Add(int userId)
+        public Guid Add(int userId)
         {
             var guid = Guid.NewGuid();
             _sessions.Add(guid, userId);
-            return new WcfSessionContextHelper {SessionGuid = guid, UserId = userId};
+            _sessionContextHelper.UserId = userId;
+            _sessionContextHelper.SessionGuid = guid;
+            return guid;
         }
 
         public int? GetUserId(Guid sessionGuid)

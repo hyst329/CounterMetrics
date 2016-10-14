@@ -22,7 +22,7 @@ namespace CounterMetrics.Managers
             _sessionContextHelper = sessionContextHelper;
         }
 
-        public ISessionContext Login(User user)
+        public LoginData Login(User user)
         {
             //throw new NotImplementedException();
             var passwordHash = _hasher.Hash(user.Password);
@@ -32,7 +32,10 @@ namespace CounterMetrics.Managers
                     _userRepository.Find()
                         .First(userEntity => (userEntity.Name == user.Name) && (userEntity.PasswordHash == passwordHash))
                         .Id;
-                return _sessionContextRepository.Add(userId);
+                Guid sessionGuid = _sessionContextRepository.Add(userId);
+                _sessionContextHelper.Instance.SessionGuid = sessionGuid;
+                _sessionContextHelper.Instance.UserId = userId;
+                return new LoginData { SessionGuid = sessionGuid, UserId = userId };
             }
             catch (InvalidOperationException)
             {
@@ -43,7 +46,7 @@ namespace CounterMetrics.Managers
         public void Logout()
         {
             //throw new NotImplementedException();
-            _sessionContextRepository.Remove(_sessionContextHelper.Instance.SessionGuid.Value);
+            _sessionContextRepository.Remove(_sessionContextHelper.Instance.SessionGuid);
         }
     }
 }

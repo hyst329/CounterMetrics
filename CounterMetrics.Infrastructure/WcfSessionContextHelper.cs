@@ -14,9 +14,9 @@ namespace CounterMetrics.Infrastructure
 
 
 
-        public Guid? SessionGuid
+        public Guid SessionGuid
         {
-            get { return GetHeader<Guid?>(SessionIdKey); }
+            get { return GetHeader<Guid>(SessionIdKey); }
             set { SetHeader(SessionIdKey, value); }
         }
 

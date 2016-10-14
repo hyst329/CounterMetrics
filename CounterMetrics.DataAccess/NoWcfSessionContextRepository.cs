@@ -14,11 +14,11 @@ namespace CounterMetrics.DataAccess
             _sessions = new Dictionary<Guid, int>();
         }
 
-        public ISessionContext Add(int userId)
+        public Guid Add(int userId)
         {
             var guid = Guid.NewGuid();
             _sessions.Add(guid, userId);
-            return new NoWcfSessionContextHelper {SessionGuid = guid, UserId = userId};
+            return guid;// new NoWcfSessionContextHelper {SessionGuid = guid, UserId = userId};
         }
 
         public int? GetUserId(Guid sessionGuid)

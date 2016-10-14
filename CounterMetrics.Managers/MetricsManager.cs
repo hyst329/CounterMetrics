@@ -68,8 +68,8 @@ namespace CounterMetrics.Managers
         public Metric[] FindByType(CounterType? counterType)
         {
             //if (userId == null) return Find(sessionGuid);
-            var userId = _sessionContextRepository.GetUserId(_sessionContextHelper.Instance.SessionGuid.Value);
-            var userEntity = _userRepository.FindById(userId.Value);
+            var userId = _sessionContextHelper.Instance.UserId;
+            var userEntity = _userRepository.FindById(userId);
             return
                 _metricsRetrieveRepository.Find(counterType, userEntity)
                     .Select(

@@ -16,8 +16,7 @@ namespace CounterMetrics.ClientApp
             var counterManager = (ICounterManager)container.Resolve(typeof(ICounterManager));
             var metricsManager = (IMetricsManager)container.Resolve(typeof(IMetricsManager));
             var sessionContextHelper = (ISessionContextHelper)container.Resolve(typeof(ISessionContextHelper));
-            var @operator = new ConsoleOperator(accountManager, authManager, counterManager, metricsManager,
-                sessionContextHelper);
+            var @operator = new ConsoleOperator(accountManager, authManager, counterManager, metricsManager);
             @operator.Operate();
             Console.ReadKey();
         }

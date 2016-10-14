@@ -7,7 +7,7 @@ namespace CounterMetrics.ClientProxies.Managers
 {
     public class AuthManagerClientProxy : ClientBase<IAuthManager>, IAuthManager
     {
-        public ISessionContext Login(User user)
+        public LoginData Login(User user)
         {
             return Channel.Login(user);
         }

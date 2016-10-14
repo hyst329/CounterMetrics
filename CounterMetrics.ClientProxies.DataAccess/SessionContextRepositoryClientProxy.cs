@@ -16,7 +16,7 @@ namespace CounterMetrics.ClientProxies.DataAccess
             return Channel.GetUserId(sessionGuid);
         }
 
-        public ISessionContext Add(int userId)
+        public Guid Add(int userId)
         {
             return Channel.Add(userId);
         }

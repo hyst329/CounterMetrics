@@ -12,7 +12,7 @@ namespace CounterMetrics.Contracts.DataAccess
         int? GetUserId(Guid sessionGuid);
 
         [OperationContract]
-        ISessionContext Add(int userId);
+        Guid Add(int userId);
 
         [OperationContract]
         void Remove(Guid sessionGuid);

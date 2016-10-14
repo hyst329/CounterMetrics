@@ -8,7 +8,7 @@ namespace CounterMetrics.Contracts.Managers
     public interface IAuthManager
     {
         [OperationContract]
-        ISessionContext Login(User user);
+        LoginData Login(User user);
 
         [OperationContract]
         void Logout();

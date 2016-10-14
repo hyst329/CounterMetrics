@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using CounterMetrics.Contracts.DataAccess;
 using CounterMetrics.Contracts.Managers;
-using CounterMetrics.Infrastructure;
 
 namespace CounterMetrics.ClientApp
 {
@@ -15,7 +14,6 @@ namespace CounterMetrics.ClientApp
         private readonly IAccountManager _accountManager;
         private readonly IAuthManager _authManager;
         private readonly IMetricsManager _metricsManager;
-        private readonly ISessionContextHelper _sessionContextHelper;
         private readonly ICounterManager _counterManager;
         private readonly Dictionary<int, string> _menu;
         private readonly Dictionary<int, MenuMethod> _menuFunctions;
@@ -23,16 +21,15 @@ namespace CounterMetrics.ClientApp
         private readonly Dictionary<int, MenuMethod> _menuLogonFunctions;
 
         private bool _shouldExit;
-        private ISessionContext _token;
+        private LoginData _token;
 
         public ConsoleOperator(IAccountManager accountManager, IAuthManager authManager, ICounterManager counterManager,
-            IMetricsManager metricsManager, ISessionContextHelper sessionContextHelper)
+            IMetricsManager metricsManager)
         {
             _accountManager = accountManager;
             _authManager = authManager;
             _counterManager = counterManager;
             _metricsManager = metricsManager;
-            _sessionContextHelper = sessionContextHelper;
 
             _menu = new Dictionary<int, string>
             {
@@ -182,15 +179,15 @@ namespace CounterMetrics.ClientApp
             else
             {
                 Console.WriteLine("Login successful, user ID {0}", _token.UserId);
-                _sessionContextHelper.Instance.SessionGuid = _token.SessionGuid;
-                _sessionContextHelper.Instance.UserId = _token.UserId;
+                //_sessionContextHelper.Instance.SessionGuid = _token.SessionGuid;
+                //_sessionContextHelper.Instance.UserId = _token.UserId;
             }
         }
 
         public void Logout()
         {
             _token = null;
-            _sessionContextHelper.Instance.SessionGuid = null;
+            //_sessionContextHelper.Instance.SessionGuid = Guid.Empty;
             Console.WriteLine();
         }
 
@@ -283,7 +280,7 @@ namespace CounterMetrics.ClientApp
                     Console.WriteLine();
                     break;
                 }
-                if (i.Key == ConsoleKey.Backspace)
+                if (i.Key == ConsoleKey.Backspace && pwd.Length > 0)
                 {
                     pwd.Remove(pwd.Length - 1, 1);
                     Console.Write("\b \b");

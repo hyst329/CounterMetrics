@@ -7,7 +7,7 @@ namespace CounterMetrics.Infrastructure
         private static readonly Lazy<ISessionContext> ObjInstance =
             new Lazy<ISessionContext>(() => new NoWcfSessionContextHelper());
 
-        public Guid? SessionGuid { get; set; }
+        public Guid SessionGuid { get; set; }
 
         public int UserId { get; set; }
 
