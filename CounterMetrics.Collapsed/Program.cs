@@ -7,7 +7,7 @@ namespace CounterMetrics.Collapsed
 {
     internal class Program
     {
-        private static void Main(string[] args)
+        private static void Main()
         {
             Console.Title = "Collapsed Client";
             var container = Bootstrapper.Init();

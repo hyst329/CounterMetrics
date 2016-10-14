@@ -46,7 +46,7 @@ namespace CounterMetrics.ClientProxies.DataAccess
                 var ch = cf.CreateChannel();
                 using (var scope = new TransactionScope(TransactionScopeOption.Required))
                 {
-                   userEntities = ch.Find();
+                    userEntities = ch.Find();
                     scope.Complete();
                 }
                 cf.Close();

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using CounterMetrics.Contracts.DataAccess;
-using CounterMetrics.Infrastructure;
 
 namespace CounterMetrics.DataAccess
 {
@@ -18,7 +17,7 @@ namespace CounterMetrics.DataAccess
         {
             var guid = Guid.NewGuid();
             _sessions.Add(guid, userId);
-            return guid;// new NoWcfSessionContextHelper {SessionGuid = guid, UserId = userId};
+            return guid; // new NoWcfSessionContextHelper {SessionGuid = guid, UserId = userId};
         }
 
         public int? GetUserId(Guid sessionGuid)

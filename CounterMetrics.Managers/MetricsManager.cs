@@ -11,18 +11,15 @@ namespace CounterMetrics.Managers
         private readonly IMetricsRetrieveRepository _metricsRetrieveRepository;
         private readonly IMetricsStoreRepository _metricsStoreRepository;
         private readonly ISessionContextHelper _sessionContextHelper;
-        private readonly ISessionContextRepository _sessionContextRepository;
         private readonly IUserRepository _userRepository;
 
         public MetricsManager(IMetricsStoreRepository metricsStoreRepository,
             IMetricsRetrieveRepository metricsRetrieveRepository, IUserRepository userRepository,
-            ISessionContextRepository sessionContextRepository,
             ISessionContextHelper sessionContextHelper)
         {
             _metricsStoreRepository = metricsStoreRepository;
             _metricsRetrieveRepository = metricsRetrieveRepository;
             _userRepository = userRepository;
-            _sessionContextRepository = sessionContextRepository;
             _sessionContextHelper = sessionContextHelper;
         }
 

@@ -32,10 +32,10 @@ namespace CounterMetrics.Managers
                     _userRepository.Find()
                         .First(userEntity => (userEntity.Name == user.Name) && (userEntity.PasswordHash == passwordHash))
                         .Id;
-                Guid sessionGuid = _sessionContextRepository.Add(userId);
+                var sessionGuid = _sessionContextRepository.Add(userId);
                 _sessionContextHelper.Instance.SessionGuid = sessionGuid;
                 _sessionContextHelper.Instance.UserId = userId;
-                return new LoginData { SessionGuid = sessionGuid, UserId = userId };
+                return new LoginData {SessionGuid = sessionGuid, UserId = userId};
             }
             catch (InvalidOperationException)
             {

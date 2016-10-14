@@ -6,12 +6,11 @@ namespace CounterMetrics.Infrastructure
 {
     public class WcfSessionContextHelper : ISessionContext, ISessionContextHelper
     {
-        private static readonly Lazy<ISessionContext> ObjInstance =
-            new Lazy<ISessionContext>(() => new WcfSessionContextHelper());
-
         private const string HeaderNs = "http://tempuri.org";
         private const string SessionIdKey = "SessionId";
 
+        private static readonly Lazy<ISessionContext> ObjInstance =
+            new Lazy<ISessionContext>(() => new WcfSessionContextHelper());
 
 
         public Guid SessionGuid
@@ -19,6 +18,11 @@ namespace CounterMetrics.Infrastructure
             get { return GetHeader<Guid>(SessionIdKey); }
             set { SetHeader(SessionIdKey, value); }
         }
+
+        public int UserId { get; set; }
+
+
+        public ISessionContext Instance => ObjInstance.Value;
 
         private T GetHeader<T>(string header)
         {
@@ -33,10 +37,5 @@ namespace CounterMetrics.Infrastructure
             var messageHeader = MessageHeader.CreateHeader(header, HeaderNs, value);
             OperationContext.Current.OutgoingMessageHeaders.Add(messageHeader);
         }
-
-        public int UserId { get; set; }
-
-
-        public ISessionContext Instance => ObjInstance.Value;
     }
 }

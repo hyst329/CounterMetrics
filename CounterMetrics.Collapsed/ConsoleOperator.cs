@@ -14,13 +14,13 @@ namespace CounterMetrics.Collapsed
 
         private readonly IAccountManager _accountManager;
         private readonly IAuthManager _authManager;
-        private readonly IMetricsManager _metricsManager;
-        private readonly ISessionContextHelper _sessionContextHelper;
         private readonly ICounterManager _counterManager;
         private readonly Dictionary<int, string> _menu;
         private readonly Dictionary<int, MenuMethod> _menuFunctions;
         private readonly Dictionary<int, string> _menuLogon;
         private readonly Dictionary<int, MenuMethod> _menuLogonFunctions;
+        private readonly IMetricsManager _metricsManager;
+        private readonly ISessionContextHelper _sessionContextHelper;
 
         private bool _shouldExit;
         private LoginData _token;
@@ -140,13 +140,11 @@ namespace CounterMetrics.Collapsed
                 Console.Write("Enter counter ID ");
                 Console.Write("[");
                 foreach (var counter in counters)
-                {
                     Console.Write("{0} ", counter.Id);
-                }
                 Console.Write("]:");
                 var idstr = Console.ReadLine() ?? "";
                 var counterId = int.Parse(idstr);
-                
+
                 if (
                     counters
                         .Count(counter => counter.Id == counterId) == 0)

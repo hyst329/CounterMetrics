@@ -10,13 +10,12 @@ namespace CounterMetrics.Managers
         private readonly ICounterRepository _counterRepository;
         private readonly ISessionContextHelper _sessionContextHelper;
         private readonly IUserRepository _userRepository;
-        private readonly ISessionContextRepository _sessionContextRepository;
 
-        public CounterManager(ICounterRepository counterRepository, ISessionContextRepository sessionContextRepository, IUserRepository userRepository,
+        public CounterManager(ICounterRepository counterRepository,
+            IUserRepository userRepository,
             ISessionContextHelper sessionContextHelper)
         {
             _counterRepository = counterRepository;
-            _sessionContextRepository = sessionContextRepository;
             _userRepository = userRepository;
             _sessionContextHelper = sessionContextHelper;
         }
@@ -33,7 +32,15 @@ namespace CounterMetrics.Managers
             //throw new NotImplementedException();
             return
                 _counterRepository.FindAll()
-                    .Select(counter => new Counter {Id = counter.Id, Type = counter.Type, UserId = counter.UserId, UserName = _userRepository.FindById(counter.UserId).Name})
+                    .Select(
+                        counter =>
+                            new Counter
+                            {
+                                Id = counter.Id,
+                                Type = counter.Type,
+                                UserId = counter.UserId,
+                                UserName = _userRepository.FindById(counter.UserId).Name
+                            })
                     .ToArray();
         }
 
@@ -42,7 +49,15 @@ namespace CounterMetrics.Managers
             var userId = _sessionContextHelper.Instance.UserId;
             return
                 _counterRepository.FindByUserId(userId, counterType)
-                    .Select(counter => new Counter {Id = counter.Id, Type = counter.Type, UserId = counter.UserId, UserName = _userRepository.FindById(counter.UserId).Name })
+                    .Select(
+                        counter =>
+                            new Counter
+                            {
+                                Id = counter.Id,
+                                Type = counter.Type,
+                                UserId = counter.UserId,
+                                UserName = _userRepository.FindById(counter.UserId).Name
+                            })
                     .ToArray();
         }
 

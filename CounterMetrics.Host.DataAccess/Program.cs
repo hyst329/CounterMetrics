@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Messaging;
-using System.Configuration;
 using System.ServiceModel;
 using CounterMetrics.Contracts.DataAccess;
 using Microsoft.Practices.Unity;
@@ -10,29 +8,32 @@ namespace CounterMetrics.Host.DataAccess
 {
     internal class Program
     {
-        private static void Main(string[] args)
+        private static void Main()
         {
             var container = Bootstrapper.Init();
             Console.Title = "Data Access Host";
-            var hostUserRepository = new UnityServiceHost(container, container.Resolve<IUserRepository>().GetType(), new Uri[] { });
+            var hostUserRepository = new UnityServiceHost(container, container.Resolve<IUserRepository>().GetType());
             hostUserRepository.Open();
             PrintServiceInfo(hostUserRepository);
-            var hostCounterRepository = new UnityServiceHost(container, container.Resolve<ICounterRepository>().GetType(), new Uri[] { });
+            var hostCounterRepository = new UnityServiceHost(container,
+                container.Resolve<ICounterRepository>().GetType());
             hostCounterRepository.Open();
             PrintServiceInfo(hostCounterRepository);
-            var hostMetricsStoreRepository = new UnityServiceHost(container, container.Resolve<IMetricsStoreRepository>().GetType(), new Uri[] { });
+            var hostMetricsStoreRepository = new UnityServiceHost(container,
+                container.Resolve<IMetricsStoreRepository>().GetType());
             hostMetricsStoreRepository.Open();
             PrintServiceInfo(hostMetricsStoreRepository);
-            var hostMetricsRetrieveRepository = new UnityServiceHost(container, container.Resolve<IMetricsRetrieveRepository>().GetType(), new Uri[] { });
+            var hostMetricsRetrieveRepository = new UnityServiceHost(container,
+                container.Resolve<IMetricsRetrieveRepository>().GetType());
             hostMetricsRetrieveRepository.Open();
             PrintServiceInfo(hostMetricsRetrieveRepository);
-            var hostSessionContextRepository = new UnityServiceHost(container, container.Resolve<ISessionContextRepository>().GetType(), new Uri[] { });
+            var hostSessionContextRepository = new UnityServiceHost(container,
+                container.Resolve<ISessionContextRepository>().GetType());
             hostSessionContextRepository.Open();
             PrintServiceInfo(hostSessionContextRepository);
             Console.WriteLine("Service started {0}", DateTime.Now);
             Console.WriteLine("Please Enter...");
             Console.ReadLine();
-
         }
 
         private static void PrintServiceInfo(ServiceHost serviceHost)

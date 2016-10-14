@@ -30,12 +30,13 @@ namespace CounterMetrics.Host.Managers
                 new ResolvedParameter<IUserRepository>(), new ResolvedParameter<ISessionContextRepository>(),
                 new ResolvedParameter<ISessionContextHelper>(), new ResolvedParameter<IHasher>()));
             unityContainer.RegisterType<ICounterManager, CounterManager>(new InjectionConstructor(
-                new ResolvedParameter<ICounterRepository>(), new ResolvedParameter<ISessionContextRepository>(), new ResolvedParameter<IUserRepository>(),
+                new ResolvedParameter<ICounterRepository>(),
+                new ResolvedParameter<IUserRepository>(),
                 new ResolvedParameter<ISessionContextHelper>()));
             unityContainer.RegisterType<IMetricsManager, MetricsManager>(new InjectionConstructor(
                 new ResolvedParameter<IMetricsStoreRepository>(),
                 new ResolvedParameter<IMetricsRetrieveRepository>(),
-                new ResolvedParameter<IUserRepository>(), new ResolvedParameter<ISessionContextRepository>(),
+                new ResolvedParameter<IUserRepository>(), 
                 new ResolvedParameter<ISessionContextHelper>()));
 
 

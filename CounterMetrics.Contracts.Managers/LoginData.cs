@@ -8,6 +8,7 @@ namespace CounterMetrics.Contracts.Managers
     {
         [DataMember]
         public Guid SessionGuid { get; set; }
+
         [DataMember]
         public int UserId { get; set; }
     }

@@ -13,12 +13,12 @@ namespace CounterMetrics.ClientApp
 
         private readonly IAccountManager _accountManager;
         private readonly IAuthManager _authManager;
-        private readonly IMetricsManager _metricsManager;
         private readonly ICounterManager _counterManager;
         private readonly Dictionary<int, string> _menu;
         private readonly Dictionary<int, MenuMethod> _menuFunctions;
         private readonly Dictionary<int, string> _menuLogon;
         private readonly Dictionary<int, MenuMethod> _menuLogonFunctions;
+        private readonly IMetricsManager _metricsManager;
 
         private bool _shouldExit;
         private LoginData _token;
@@ -137,13 +137,11 @@ namespace CounterMetrics.ClientApp
                 Console.Write("Enter counter ID ");
                 Console.Write("[");
                 foreach (var counter in counters)
-                {
                     Console.Write("{0} ", counter.Id);
-                }
                 Console.Write("]:");
                 var idstr = Console.ReadLine() ?? "";
                 var counterId = int.Parse(idstr);
-                
+
                 if (
                     counters
                         .Count(counter => counter.Id == counterId) == 0)
@@ -177,11 +175,7 @@ namespace CounterMetrics.ClientApp
             if (_token == null)
                 Console.WriteLine("Cannot log in username and/or password may be incorrect");
             else
-            {
                 Console.WriteLine("Login successful, user ID {0}", _token.UserId);
-                //_sessionContextHelper.Instance.SessionGuid = _token.SessionGuid;
-                //_sessionContextHelper.Instance.UserId = _token.UserId;
-            }
         }
 
         public void Logout()
@@ -280,7 +274,7 @@ namespace CounterMetrics.ClientApp
                     Console.WriteLine();
                     break;
                 }
-                if (i.Key == ConsoleKey.Backspace && pwd.Length > 0)
+                if ((i.Key == ConsoleKey.Backspace) && (pwd.Length > 0))
                 {
                     pwd.Remove(pwd.Length - 1, 1);
                     Console.Write("\b \b");
