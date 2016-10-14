@@ -1,4 +1,5 @@
 ﻿using System.ServiceModel;
+using System.Transactions;
 using CounterMetrics.Contracts.DataAccess;
 
 namespace CounterMetrics.ClientProxies.DataAccess
@@ -11,27 +12,78 @@ namespace CounterMetrics.ClientProxies.DataAccess
 
         public void Create(CounterEntity counterEntity)
         {
-            Channel.Create(counterEntity);
+            using (var cf = new ChannelFactory<ICounterRepository>())
+            {
+                var ch = cf.CreateChannel();
+                using (var scope = new TransactionScope(TransactionScopeOption.Required))
+                {
+                    ch.Create(counterEntity);
+                    scope.Complete();
+                }
+                cf.Close();
+            }
         }
 
         public void DeleteById(int counterId)
         {
-            Channel.DeleteById(counterId);
+            using (var cf = new ChannelFactory<ICounterRepository>())
+            {
+                var ch = cf.CreateChannel();
+                using (var scope = new TransactionScope(TransactionScopeOption.Required))
+                {
+                    ch.DeleteById(counterId);
+                    scope.Complete();
+                }
+                cf.Close();
+            }
         }
 
         public CounterEntity[] FindAll()
         {
-            return Channel.FindAll();
+            CounterEntity[] counterEntities;
+            using (var cf = new ChannelFactory<ICounterRepository>())
+            {
+                var ch = cf.CreateChannel();
+                using (var scope = new TransactionScope(TransactionScopeOption.Required))
+                {
+                    counterEntities = ch.FindAll();
+                    scope.Complete();
+                }
+                cf.Close();
+            }
+            return counterEntities;
         }
 
         public CounterEntity FindById(int counterId)
         {
-            return Channel.FindById(counterId);
+            CounterEntity counterEntity;
+            using (var cf = new ChannelFactory<ICounterRepository>())
+            {
+                var ch = cf.CreateChannel();
+                using (var scope = new TransactionScope(TransactionScopeOption.Required))
+                {
+                    counterEntity = ch.FindById(counterId);
+                    scope.Complete();
+                }
+                cf.Close();
+            }
+            return counterEntity;
         }
 
         public CounterEntity[] FindByUserId(int userId, CounterType? counterType)
         {
-            return Channel.FindByUserId(userId, counterType);
+            CounterEntity[] counterEntities;
+            using (var cf = new ChannelFactory<ICounterRepository>())
+            {
+                var ch = cf.CreateChannel();
+                using (var scope = new TransactionScope(TransactionScopeOption.Required))
+                {
+                    counterEntities = ch.FindByUserId(userId, counterType);
+                    scope.Complete();
+                }
+                cf.Close();
+            }
+            return counterEntities;
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System.ServiceModel;
+using System.Transactions;
 using CounterMetrics.Contracts.DataAccess;
 
 namespace CounterMetrics.ClientProxies.DataAccess
@@ -11,27 +12,78 @@ namespace CounterMetrics.ClientProxies.DataAccess
 
         public void Create(UserEntity userEntity)
         {
-            Channel.Create(userEntity);
+            using (var cf = new ChannelFactory<IUserRepository>())
+            {
+                var ch = cf.CreateChannel();
+                using (var scope = new TransactionScope(TransactionScopeOption.Required))
+                {
+                    ch.Create(userEntity);
+                    scope.Complete();
+                }
+                cf.Close();
+            }
         }
 
         public void DeleteById(int userId)
         {
-            Channel.DeleteById(userId);
+            using (var cf = new ChannelFactory<IUserRepository>())
+            {
+                var ch = cf.CreateChannel();
+                using (var scope = new TransactionScope(TransactionScopeOption.Required))
+                {
+                    ch.DeleteById(userId);
+                    scope.Complete();
+                }
+                cf.Close();
+            }
         }
 
         public UserEntity[] Find()
         {
-            return Channel.Find();
+            UserEntity[] userEntities;
+            using (var cf = new ChannelFactory<IUserRepository>())
+            {
+                var ch = cf.CreateChannel();
+                using (var scope = new TransactionScope(TransactionScopeOption.Required))
+                {
+                   userEntities = ch.Find();
+                    scope.Complete();
+                }
+                cf.Close();
+            }
+            return userEntities;
         }
 
         public UserEntity FindById(int userId)
         {
-            return Channel.FindById(userId);
+            UserEntity userEntity;
+            using (var cf = new ChannelFactory<IUserRepository>())
+            {
+                var ch = cf.CreateChannel();
+                using (var scope = new TransactionScope(TransactionScopeOption.Required))
+                {
+                    userEntity = ch.FindById(userId);
+                    scope.Complete();
+                }
+                cf.Close();
+            }
+            return userEntity;
         }
 
         public int GetFreeId()
         {
-            return Channel.GetFreeId();
+            int id;
+            using (var cf = new ChannelFactory<IUserRepository>())
+            {
+                var ch = cf.CreateChannel();
+                using (var scope = new TransactionScope(TransactionScopeOption.Required))
+                {
+                    id = ch.GetFreeId();
+                    scope.Complete();
+                }
+                cf.Close();
+            }
+            return id;
         }
     }
 }

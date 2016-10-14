@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ServiceModel;
+using System.Transactions;
 using CounterMetrics.Contracts.DataAccess;
 
 namespace CounterMetrics.ClientProxies.DataAccess
@@ -13,22 +14,66 @@ namespace CounterMetrics.ClientProxies.DataAccess
 
         public MetricEntity[] Find(CounterType? counterType, UserEntity userEntity)
         {
-            return Channel.Find(counterType, userEntity);
+            MetricEntity[] metricEntities;
+            using (var cf = new ChannelFactory<IMetricsRetrieveRepository>())
+            {
+                var ch = cf.CreateChannel();
+                using (var scope = new TransactionScope(TransactionScopeOption.Required))
+                {
+                    metricEntities = ch.Find(counterType, userEntity);
+                    scope.Complete();
+                }
+                cf.Close();
+            }
+            return metricEntities;
         }
 
         public MetricEntity[] FindAll()
         {
-            return Channel.FindAll();
+            MetricEntity[] metricEntities;
+            using (var cf = new ChannelFactory<IMetricsRetrieveRepository>())
+            {
+                var ch = cf.CreateChannel();
+                using (var scope = new TransactionScope(TransactionScopeOption.Required))
+                {
+                    metricEntities = ch.FindAll();
+                    scope.Complete();
+                }
+                cf.Close();
+            }
+            return metricEntities;
         }
 
         public MetricEntity[] FindByDate(DateTime? dateTimeStart, DateTime? dateTimeEnd)
         {
-            return Channel.FindByDate(dateTimeStart, dateTimeEnd);
+            MetricEntity[] metricEntities;
+            using (var cf = new ChannelFactory<IMetricsRetrieveRepository>())
+            {
+                var ch = cf.CreateChannel();
+                using (var scope = new TransactionScope(TransactionScopeOption.Required))
+                {
+                    metricEntities = ch.FindByDate(dateTimeStart, dateTimeEnd);
+                    scope.Complete();
+                }
+                cf.Close();
+            }
+            return metricEntities;
         }
 
         public MetricEntity[] FindUserMetricsForMonth(int userId, int monthNumber, int? yearNumber)
         {
-            return Channel.FindUserMetricsForMonth(userId, monthNumber, yearNumber);
+            MetricEntity[] metricEntities;
+            using (var cf = new ChannelFactory<IMetricsRetrieveRepository>())
+            {
+                var ch = cf.CreateChannel();
+                using (var scope = new TransactionScope(TransactionScopeOption.Required))
+                {
+                    metricEntities = ch.FindUserMetricsForMonth(userId, monthNumber, yearNumber);
+                    scope.Complete();
+                }
+                cf.Close();
+            }
+            return metricEntities;
         }
     }
 }

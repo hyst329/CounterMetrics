@@ -307,16 +307,16 @@ namespace CounterMetrics.ClientApp
             if (metrics.Length == 0) Console.WriteLine("No data to display.");
             var counters = _counterManager.FindAll();
             var hLine = "".PadRight(Console.WindowWidth, '-');
-            var tableFormat = "|{0,10}|{3,5}|{1,28}|{2,9} {4,5} ({5,14})|";
+            var tableFormat = "|{0,8}|{3,4} {6,6}|{1,28}|{2,8} {4,5} ({5,11})|";
             Console.Write(hLine);
-            Console.Write(tableFormat, "Ctr ID", "Date", "Value", "UID", "units", "type");
+            Console.Write(tableFormat, "Ctr ID", "Date", "Value", "UID", "units", "type", "name");
             Console.Write(hLine);
             foreach (var metric in metrics)
             {
                 var ctrData = counters.First(counter => counter.Id == metric.CounterId);
                 Console.Write(tableFormat, metric.CounterId,
                     metric.MetricDate,
-                    metric.MetricValue, ctrData.UserId, GetUnits(ctrData.Type), ctrData.Type);
+                    metric.MetricValue, ctrData.UserId, GetUnits(ctrData.Type), ctrData.Type, ctrData.UserName);
             }
             Console.Write(hLine);
         }
