@@ -86,6 +86,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\CounterMetrics.ClientProxies.DataAccess\CounterMetrics.ClientProxies.DataAccess.csproj">
+      <Project>{89ee8639-b4e8-4a68-9e70-f294045904b6}</Project>
+      <Name>CounterMetrics.ClientProxies.DataAccess</Name>
+    </ProjectReference>
     <ProjectReference Include="..\CounterMetrics.Contracts.DataAccess\CounterMetrics.Contracts.DataAccess.csproj">
       <Project>{ad930fd0-6a34-4944-8b1d-d70f77d32a4c}</Project>
       <Name>CounterMetrics.Contracts.DataAccess</Name>

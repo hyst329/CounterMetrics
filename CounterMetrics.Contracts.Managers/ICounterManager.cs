@@ -1,5 +1,6 @@
 ﻿using System.ServiceModel;
 using CounterMetrics.Contracts.DataAccess;
+using CounterMetrics.Infrastructure;
 
 namespace CounterMetrics.Contracts.Managers
 {

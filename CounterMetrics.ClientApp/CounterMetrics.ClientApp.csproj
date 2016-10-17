@@ -33,14 +33,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="Microsoft.Practices.ServiceLocation, Version=1.3.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\CommonServiceLocator.1.3\lib\portable-net4+sl5+netcore45+wpa81+wp8\Microsoft.Practices.ServiceLocation.dll</HintPath>
       <Private>True</Private>
@@ -86,17 +78,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\CounterMetrics.ClientProxies.DataAccess\CounterMetrics.ClientProxies.DataAccess.csproj">
-      <Project>{89ee8639-b4e8-4a68-9e70-f294045904b6}</Project>
-      <Name>CounterMetrics.ClientProxies.DataAccess</Name>
-    </ProjectReference>
     <ProjectReference Include="..\CounterMetrics.ClientProxies.Managers\CounterMetrics.ClientProxies.Managers.csproj">
       <Project>{7b41e65d-aaf5-48b0-8b7a-47aa10f91781}</Project>
       <Name>CounterMetrics.ClientProxies.Managers</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\CounterMetrics.Contracts.DataAccess\CounterMetrics.Contracts.DataAccess.csproj">
-      <Project>{ad930fd0-6a34-4944-8b1d-d70f77d32a4c}</Project>
-      <Name>CounterMetrics.Contracts.DataAccess</Name>
     </ProjectReference>
     <ProjectReference Include="..\CounterMetrics.Contracts.Managers\CounterMetrics.Contracts.Managers.csproj">
       <Project>{ee3b040e-e8fd-423a-89e4-5b3b43f41b24}</Project>

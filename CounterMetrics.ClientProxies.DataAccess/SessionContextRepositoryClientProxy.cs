@@ -7,9 +7,9 @@ namespace CounterMetrics.ClientProxies.DataAccess
 {
     public class SessionContextRepositoryClientProxy : ClientBase<ISessionContextRepository>, ISessionContextRepository
     {
-        public SessionContextRepositoryClientProxy(string endpointConfigurationName) : base(endpointConfigurationName)
-        {
-        }
+        //public SessionContextRepositoryClientProxy(string endpointConfigurationName) : base(endpointConfigurationName)
+        //{
+        //}
 
         public int? GetUserId(Guid sessionGuid)
         {

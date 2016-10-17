@@ -1,14 +1,15 @@
 ﻿using System.ServiceModel;
 using System.Transactions;
 using CounterMetrics.Contracts.DataAccess;
+using CounterMetrics.Infrastructure;
 
 namespace CounterMetrics.ClientProxies.DataAccess
 {
     public class CounterRepositoryClientProxy : ClientBase<ICounterRepository>, ICounterRepository
     {
-        public CounterRepositoryClientProxy(string endpointConfigurationName) : base(endpointConfigurationName)
-        {
-        }
+        //public CounterRepositoryClientProxy(string endpointConfigurationName) : base(endpointConfigurationName)
+        //{
+        //}
 
         public void Create(CounterEntity counterEntity)
         {

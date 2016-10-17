@@ -1,10 +1,10 @@
 ﻿using System.Data.Entity;
 using CounterMetrics.Contracts.DataAccess;
 using CounterMetrics.Contracts.Managers;
-using CounterMetrics.DataAccess;
 using CounterMetrics.Infrastructure;
 using CounterMetrics.Managers;
 using Microsoft.Practices.Unity;
+using CounterMetrics.ClientProxies.DataAccess;
 
 namespace CounterMetrics.Host.Managers
 {
@@ -15,14 +15,15 @@ namespace CounterMetrics.Host.Managers
             var unityContainer = new UnityContainer();
             unityContainer.RegisterType<ILogger, Logger>();
             unityContainer.RegisterType<IHasher, Hasher>();
-            unityContainer.RegisterType<DbContext, DatabaseContext>(new InjectionConstructor("name=CounterMetricsConn"));
-            unityContainer.RegisterType<IUserRepository, UserRepository>();
-            unityContainer.RegisterType<ICounterRepository, CounterRepository>();
-            unityContainer.RegisterInstance<ISessionContextRepository>(
-                unityContainer.Resolve<WcfSessionContextRepository>());
-            unityContainer.RegisterType<IMetricsStoreRepository, MetricsStoreRepository>();
-            unityContainer.RegisterType<IMetricsRetrieveRepository, MetricsRetrieveRepository>();
-            unityContainer.RegisterType<IUserRepository, UserRepository>();
+            //unityContainer.RegisterType<DbContext, DatabaseContext>(new InjectionConstructor("name=CounterMetricsConn"));
+            unityContainer.RegisterType<IUserRepository, UserRepositoryClientProxy>();
+            unityContainer.RegisterType<ICounterRepository, CounterRepositoryClientProxy>();
+            //unityContainer.RegisterInstance<ISessionContextRepository>(
+            //    unityContainer.Resolve<SessionContextRepositoryClientProxy>());
+            unityContainer.RegisterType<ISessionContextRepository, SessionContextRepositoryClientProxy>();
+            unityContainer.RegisterType<IMetricsStoreRepository, MetricsStoreRepositoryClientProxy>();
+            unityContainer.RegisterType<IMetricsRetrieveRepository, MetricsRetrieveRepositoryClientProxy>();
+            unityContainer.RegisterType<IUserRepository, UserRepositoryClientProxy>();
             unityContainer.RegisterType<ISessionContextHelper, WcfSessionContextHelper>();
             unityContainer.RegisterType<IAccountManager, AccountManager>(new InjectionConstructor(
                 new ResolvedParameter<IUserRepository>(), new ResolvedParameter<IHasher>()));

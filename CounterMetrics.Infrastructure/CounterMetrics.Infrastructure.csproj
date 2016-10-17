@@ -67,6 +67,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CounterType.cs" />
     <Compile Include="Hasher.cs" />
     <Compile Include="IHasher.cs" />
     <Compile Include="ILogger.cs" />

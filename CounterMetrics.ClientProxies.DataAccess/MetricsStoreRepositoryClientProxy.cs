@@ -6,9 +6,9 @@ namespace CounterMetrics.ClientProxies.DataAccess
 {
     public class MetricsStoreRepositoryClientProxy : ClientBase<IMetricsStoreRepository>, IMetricsStoreRepository
     {
-        public MetricsStoreRepositoryClientProxy(string endpointConfigurationName) : base(endpointConfigurationName)
-        {
-        }
+        //public MetricsStoreRepositoryClientProxy(string endpointConfigurationName) : base(endpointConfigurationName)
+        //{
+        //}
 
         public void Persist(MetricEntity metricEntity)
         {
