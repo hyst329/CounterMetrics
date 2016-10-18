@@ -12,16 +12,17 @@ namespace CounterMetrics.ClientProxies.DataAccess
 
         public void Persist(MetricEntity metricEntity)
         {
-            using (var cf = new ChannelFactory<IMetricsStoreRepository>())
-            {
-                var ch = cf.CreateChannel();
-                using (var scope = new TransactionScope(TransactionScopeOption.Required))
-                {
-                    ch.Persist(metricEntity);
-                    scope.Complete();
-                }
-                cf.Close();
-            }
+            //using (var cf = new ChannelFactory<IMetricsStoreRepository>())
+            //{
+            //    var ch = cf.CreateChannel();
+            //    using (var scope = new TransactionScope(TransactionScopeOption.Required))
+            //    {
+            //        ch.Persist(metricEntity);
+            //        scope.Complete();
+            //    }
+            //    cf.Close();
+            //}
+            Channel.Persist(metricEntity);
         }
     }
 }

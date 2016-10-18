@@ -18,8 +18,12 @@ namespace CounterMetrics.Contracts.DataAccess
         public int UserId { get; set; }
 
         [DataMember]
+        [ForeignKey("UserId")]
+        public UserEntity User { get; set; }
+
+        [DataMember]
         public CounterType Type { get; set; }
     }
 
-   
+
 }

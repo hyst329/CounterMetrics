@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Data.Entity;
 using CounterMetrics.Contracts.DataAccess;
 using CounterMetrics.Infrastructure;
 
@@ -12,6 +13,7 @@ namespace CounterMetrics.DataAccess
         public CounterRepository(DatabaseContext databaseContext)
         {
             _databaseContext = databaseContext;
+            ;
         }
 
         public void Create(CounterEntity counterEntity)
@@ -58,7 +60,7 @@ namespace CounterMetrics.DataAccess
             CounterEntity counterEntity;
             try
             {
-                counterEntity = _databaseContext.CounterEntity.First(counter => counter.Id == counterId);
+                counterEntity = _databaseContext.CounterEntity.Include(c=>c.User).First(counter => counter.Id == counterId);
                 ServiceLocator.Logger.Log(LogSeverity.Info,
                     $"DataAccess {GetType().FullName}: FindAll by ID");
             }
@@ -76,7 +78,7 @@ namespace CounterMetrics.DataAccess
             try
             {
                 var counterEntities =
-                    _databaseContext.CounterEntity.Where(counter => counter.UserId == userId).ToArray();
+                    _databaseContext.CounterEntity.Include(c => c.User).Where(counter => counter.UserId == userId).ToArray();
                 ServiceLocator.Logger.Log(LogSeverity.Info,
                     $"DataAccess {GetType().FullName}: FindAll by User ID");
                 return counterEntities;
@@ -94,7 +96,7 @@ namespace CounterMetrics.DataAccess
             {
                 ServiceLocator.Logger.Log(LogSeverity.Info,
                     $"DataAccess {GetType().FullName}: FindAll All");
-                return _databaseContext.CounterEntity.ToArray();
+                return _databaseContext.CounterEntity.Include(c => c.User).ToArray();
             }
             catch (Exception e)
             {

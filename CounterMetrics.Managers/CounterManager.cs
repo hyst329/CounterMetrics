@@ -38,8 +38,8 @@ namespace CounterMetrics.Managers
                             {
                                 Id = counter.Id,
                                 Type = counter.Type,
-                                UserId = counter.UserId,
-                                UserName = _userRepository.FindById(counter.UserId).Name
+                                UserId = counter.User.Id,
+                                UserName = counter.User.Name
                             })
                     .ToArray();
         }
@@ -55,8 +55,8 @@ namespace CounterMetrics.Managers
                             {
                                 Id = counter.Id,
                                 Type = counter.Type,
-                                UserId = counter.UserId,
-                                UserName = _userRepository.FindById(counter.UserId).Name
+                                UserId = counter.User.Id,
+                                UserName = counter.User.Name
                             })
                     .ToArray();
         }
