@@ -1,6 +1,6 @@
 ﻿using System;
-using System.Linq;
 using System.Data.Entity;
+using System.Linq;
 using CounterMetrics.Contracts.DataAccess;
 using CounterMetrics.Infrastructure;
 
@@ -60,7 +60,8 @@ namespace CounterMetrics.DataAccess
             CounterEntity counterEntity;
             try
             {
-                counterEntity = _databaseContext.CounterEntity.Include(c=>c.User).First(counter => counter.Id == counterId);
+                counterEntity =
+                    _databaseContext.CounterEntity.Include(c => c.User).First(counter => counter.Id == counterId);
                 ServiceLocator.Logger.Log(LogSeverity.Info,
                     $"DataAccess {GetType().FullName}: FindAll by ID");
             }
@@ -78,7 +79,9 @@ namespace CounterMetrics.DataAccess
             try
             {
                 var counterEntities =
-                    _databaseContext.CounterEntity.Include(c => c.User).Where(counter => counter.UserId == userId).ToArray();
+                    _databaseContext.CounterEntity.Include(c => c.User)
+                        .Where(counter => counter.UserId == userId)
+                        .ToArray();
                 ServiceLocator.Logger.Log(LogSeverity.Info,
                     $"DataAccess {GetType().FullName}: FindAll by User ID");
                 return counterEntities;

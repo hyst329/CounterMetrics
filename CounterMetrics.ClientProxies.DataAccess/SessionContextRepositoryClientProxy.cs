@@ -1,6 +1,5 @@
 ﻿using System;
 using System.ServiceModel;
-using System.Transactions;
 using CounterMetrics.Contracts.DataAccess;
 
 namespace CounterMetrics.ClientProxies.DataAccess

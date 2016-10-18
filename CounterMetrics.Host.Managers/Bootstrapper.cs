@@ -1,10 +1,9 @@
-﻿using System.Data.Entity;
+﻿using CounterMetrics.ClientProxies.DataAccess;
 using CounterMetrics.Contracts.DataAccess;
 using CounterMetrics.Contracts.Managers;
 using CounterMetrics.Infrastructure;
 using CounterMetrics.Managers;
 using Microsoft.Practices.Unity;
-using CounterMetrics.ClientProxies.DataAccess;
 
 namespace CounterMetrics.Host.Managers
 {
@@ -37,7 +36,7 @@ namespace CounterMetrics.Host.Managers
             unityContainer.RegisterType<IMetricsManager, MetricsManager>(new InjectionConstructor(
                 new ResolvedParameter<IMetricsStoreRepository>(),
                 new ResolvedParameter<IMetricsRetrieveRepository>(),
-                new ResolvedParameter<IUserRepository>(), 
+                new ResolvedParameter<IUserRepository>(),
                 new ResolvedParameter<ISessionContextHelper>()));
 
 

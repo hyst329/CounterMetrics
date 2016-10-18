@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using CounterMetrics.Contracts.DataAccess;
 using CounterMetrics.Contracts.Managers;
 using CounterMetrics.Infrastructure;
 

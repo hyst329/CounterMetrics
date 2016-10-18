@@ -1,7 +1,7 @@
-﻿using CounterMetrics.Infrastructure;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Runtime.Serialization;
+using CounterMetrics.Infrastructure;
 
 namespace CounterMetrics.Contracts.DataAccess
 {
@@ -24,6 +24,4 @@ namespace CounterMetrics.Contracts.DataAccess
         [DataMember]
         public CounterType Type { get; set; }
     }
-
-
 }

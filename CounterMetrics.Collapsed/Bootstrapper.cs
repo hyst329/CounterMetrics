@@ -36,7 +36,7 @@ namespace CounterMetrics.Collapsed
             unityContainer.RegisterType<IMetricsManager, MetricsManager>(new InjectionConstructor(
                 new ResolvedParameter<IMetricsStoreRepository>(),
                 new ResolvedParameter<IMetricsRetrieveRepository>(),
-                new ResolvedParameter<IUserRepository>(), 
+                new ResolvedParameter<IUserRepository>(),
                 new ResolvedParameter<ISessionContextHelper>()));
 
 
